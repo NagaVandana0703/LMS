@@ -1,0 +1,145 @@
+.header-block {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-width: 0.5px 0px;
+  border-style: solid;
+  border-color: #d1d1d1;
+  height: 75px;
+  padding: 1px;
+
+  font-family: "sans-serif";
+}
+
+.header-block header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+  align-items: center;
+}
+
+header .logo a {
+  text-decoration: none;
+}
+
+header .logo a .txt {
+
+
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height */
+
+
+  /* body text color */
+
+  color: #393A3A;
+}
+
+header .rightIcons {
+  display: flex;
+  align-items: center;
+  padding-right: 0px;
+}
+
+.header-icon {
+  margin-top: 10px !important;
+}
+
+.header-title-new {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-left: 200px;
+  gap: 10px;
+}
+
+.rightIcons {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 30px;
+  margin-top: -8px;
+}
+
+.user_details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user_designation {
+  /* background: #F7F7F7; */
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  /* width: 185px; */
+  justify-content: space-around;
+}
+
+.user-image-innova {
+  border: 1px solid #00397A;
+  filter: drop-shadow(0px 4px 4px rgba(255, 255, 255, 0.15));
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.user_name_innova {
+  font-family: 'Inter';
+  font-style: normal;
+  width: 90px;
+
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 113%;
+  text-align: center;
+
+  /* body text color */
+
+  color: #393A3A;
+
+}
+
+.dropdown-basic {
+  background-color: #F7F7F7 !important;
+  border: none !important;
+}
+
+.logout-header-sso:hover {
+  background-color: #F7F7F7 !important;
+  width: 70%;
+
+}
+
+.user_designation_innova {
+  width: 101px;
+  height: 12px;
+  left: 1202px;
+  top: 32px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 113%;
+  /* or 12px */
+
+  text-align: center;
+
+  /* light text */
+
+  color: #A0A0A0;
+}
+
+.dropdown-toggle::after {
+  margin-left: 0px !important;
+  border: none !important;
+  content: ""
+}

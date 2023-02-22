@@ -1,0 +1,78 @@
+/* body{
+    background-image: url('/src/images/lib.jpg');
+    /* width: 100%;
+    height: 100%; 
+   background-repeat: no-repeat;
+   background-size: cover;
+} */
+.flexContainer{
+    display: flex;
+ 
+    background-color: darkblue;
+    width:60%;
+    margin: 120px auto;
+    padding: 20px;
+    height: 430px;
+}
+.flexContainer > div {
+    background-color: whitesmoke;
+    margin: 5px;
+    text-align: center;
+    border: 2px solid whitesmoke;
+    width: 50%;
+    border-radius: 5px;
+    padding: 20px;
+}
+.flexContainer .inputBox {
+    padding: 5px;
+    
+
+}
+.btn button{
+   background-color: darkblue;
+   color: white;
+   border: 1px solid darkblue;
+   padding: 5px 15px;
+}
+#registerBtn{
+    cursor: pointer;
+    color: darkblue;
+   
+   
+}
+.NavBar {
+    border-bottom: 5px solid rgb(221, 221, 221);
+    background-color: darkblue;
+   
+  }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+  }
+  
+  li {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: white;
+    margin: 10px;
+  }
+  
+  a:link {
+    text-decoration: none;
+    
+  }
+  .a {
+    display: flex;
+    align-items: center;
+  }
+  .regBtn{
+    background-color: darkblue;
+    margin-top: 3px;
+  }
+  
