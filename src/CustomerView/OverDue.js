@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { AgGridReact } from 'ag-grid-react';
-
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { TableHeader ,  AButton } from "../AdminView/AVStyles";
+import MainDataTable from "../Helpers/MainDataTable";
 
 
 // import './Table.css';
@@ -9,7 +8,7 @@ const OverDue = () => {
     const ReturnAction = () => {
         return (
             <>
-                <button className='ActionBtn'>Return</button>
+                <AButton>Return</AButton>
             </>
         )
     }
@@ -31,16 +30,10 @@ const OverDue = () => {
 
     return (
         <>
-            <div className="Container">
-                <h3>OverDue</h3>
-                <div className="ag-theme-alpine" id='Table'>
-                    <AgGridReact
-                        columnDefs={columnDefs}
-                        rowData={rowData}
-                        defaultColDef={{ flex: 1 }}
-                    ></AgGridReact>
-                </div>
-            </div>
+            <>
+                <TableHeader>OverDue</TableHeader>
+                <MainDataTable columnDefs={columnDefs} rowData={rowData} defaultColDef={{ flex: 1 }}/>
+            </>
         </>
     )
 }

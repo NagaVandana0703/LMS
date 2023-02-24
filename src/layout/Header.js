@@ -1,70 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { CgProfile } from "react-icons/cg";
-import cal from "./../assets/perm_contact_calendar.png";
-// import BellNotification from "../components/bellComponent/bell";
-import "./Header.css";
-import user from "./UserDetails";
+import React from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { BiBookOpen } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import {  DropdownItemLogout, DropdownToggleBasic, Header1, HeaderBlock, HeaderTitleNew,  RightIcons, Text, UserDesignation, UserDesignationInnova, UserDetails, UserImageInnova, UserNameInnova } from "./LayoutStyles";
 
 function Header() {
   const navigate=useNavigate();
-  const items = [
-    {
-      icon: (
-        <CgProfile
-          size="1.8em"
-          style={{ backgroundColor: "white" }}
-          className="profile"
-        />
-      ),
-      items: [
-        {
-          label: "",
-        },
-      ],
-    },
-  ];
-  const openInNewTab = (url) => {
+  const openInNewTab = () => {
     localStorage.clear()
     navigate('/')
-    // window.open(process.env.REACT_APP_LOGOUT_URL, "_self");
-
 
   };
-
   //  let user_details =JSON.parse(localStorage.getItem('userDetails'))
   let user_details = { displayName: 'Vandana', role: 'Admin' };
-
+  const user={
+    image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ13E7APiRYnJMkfaiVP5TFDrZSXolAQc0QhQ&usqp=CAU"
+}
   return (
-    <div className="header-block">
-
-      <header>
-        <div className="logo">
-          <a className="header-title-new">
+    <HeaderBlock>
+      <Header1>        
+          <HeaderTitleNew>
             <BiBookOpen />
-            {/* <img src={cal} alt="ftp_cal" className="ftpCal" /> */}
-            <div className="txt">Library Management Sysytem</div>
-          </a>
-        </div>
-        <div className="rightIcons">
-          {/* <BellNotification /> */}
-          <div className="user_designation">
-            <div className="user_details" >
-              <div className="user_name_innova">{user_details.displayName}</div>
-              <div className="user_designation_innova">{user_details.role}</div>
-            </div>
+            <Text>Library Management Sysytem</Text>
+          </HeaderTitleNew>        
+        <RightIcons>
+          <UserDesignation>
+            <UserDetails>
+              <UserNameInnova>{user_details.displayName}</UserNameInnova>
+              <UserDesignationInnova>{user_details.role}</UserDesignationInnova>
+            </UserDetails>
             <Dropdown>
-              <Dropdown.Toggle className="dropdown-basic">
-                <img src={user.image} className="user-image-innova" alt="profilepic" /></Dropdown.Toggle>
+              <DropdownToggleBasic>
+                <UserImageInnova src={user.image}  alt="profilepic" /></DropdownToggleBasic>
               <Dropdown.Menu>
-                <Dropdown.Item onClick={openInNewTab} className="logout-header-sso">Log Out</Dropdown.Item></Dropdown.Menu>
+                <DropdownItemLogout onClick={openInNewTab} >Log Out</DropdownItemLogout></Dropdown.Menu>
             </Dropdown>
-          </div>
-        </div>
-      </header>
-    </div>
+          </UserDesignation>
+        </RightIcons>
+      </Header1>
+    </HeaderBlock>
   );
 }
 export default Header;

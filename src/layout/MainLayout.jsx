@@ -1,20 +1,19 @@
 import SideNavBar from "./SideNavBar";
-import "./MainLayout.css";
 import Header from "./Header";
 import React from "react";
+import { ComponentContainer, ComponentFooter, MainBlockLayout, RightContainer } from "./LayoutStyles";
 const MainLayout = (props) => {
   const { menuItems, Component } = props;
- 
+
   return (
-    <div id="main-layout-block">
+    <MainBlockLayout>
       <SideNavBar menuItems={menuItems} />
-<div className="right-container">
-<Header  />
-<div className="component-container"><Component /></div>
-<div className="component-footer">Innova,Copyright &copy; 2022 All rights reserved</div>
-</div>
-    
-    </div>
+      <RightContainer>
+        <Header />
+        <ComponentContainer><Component /></ComponentContainer>
+        <ComponentFooter>Innova,Copyright &copy; 2022 All rights reserved</ComponentFooter>
+      </RightContainer>
+    </MainBlockLayout>
   );
 };
 

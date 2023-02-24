@@ -1,19 +1,11 @@
 import React, { useMemo, useState } from "react";
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
-import "primeicons/primeicons.css";
-// import "primereact/resources/primereact.css";
-import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
- import 'ag-grid-enterprise';
-
-import { Dropdown } from 'primereact/dropdown';
-import './Table.css';
-import './toast.css';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import Modal from "react-bootstrap/Modal";
+import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
 import PopupForm from "./PopupForm";
+import { AButton, TableHeader } from "../AdminView/AVStyles";
+import { Field, Form, Formik } from "formik";
+import { FormC } from "./CVStyles";
+import MainDataTable from "../Helpers/MainDataTable";
 
 
 
@@ -24,29 +16,17 @@ const AllBooks = () => {
     const setModal = () => {
         setModalIsOpen(true);
     };
-    const [gridApi, setGridApi] = useState(null);
-    const [gridColumnApi, setGridColumnApi] = useState(null);
+
     const IssueBodyAction = (e) => {
 
         const Issue = () => {
             setShowPopup(true)
             console.log(e.data)
-            // toast(
-            //     <div className='divtoast'>
-            //       You haven't issued any book
-            //       &nbsp; &nbsp;
-            //       <TaskAltIcon style={{ color: "#00FF29" }} />
-            //     </div>,
-            //     {
-            //       className: "toasterstyle",
-            //       autoClose: "1000",
-            //       hideProgressBar: true,
-            //     }
-            //   );
+
         }
         return (
             <>
-                <button onClick={Issue} className='ActionBtn'>Issue</button>
+                <AButton onClick={Issue}>Issue</AButton>
             </>
         )
     }
@@ -69,78 +49,46 @@ const AllBooks = () => {
         { serialno: '8', title: 'Doremon', author: 'MrCat', quantity: 25 },
         { serialno: '9', title: 'Sinchan', author: 'Joe', quantity: 5 },
     ])
-    const arr=[
+    const arr = [
         { serialno: '4', title: 'Alchemist', author: 'Geetha', quantity: 7 },
         { serialno: '5', title: 'thinkMonk', author: 'Shetty', quantity: 8 },
         { serialno: '6', title: 'Mind', author: 'Vandana', quantity: 9 },
         { serialno: '7', title: 'BhagavatGeetha', author: 'Krishna', quantity: 10 },
     ]
 
-    // const columnTypes = useMemo(() => {
-    //     return {
-    //         textCol: { width: '200px' }
-    //     }
-    // }, [])
-
-    const items = [
-        { label: 'education' },
-        { label: 'Board Books' },
-        { label: 'Young adult' },
-        { label: 'New adult' },
-    ];
-    const [item, setItem] = useState();
-    const changethedata = (event) => {
-        setItem(event.value);
-        let obj = event.value.label;
-        if (obj === '19-40') {
-            console.log(obj)
-            setData(arr)
+    const Validate = (values) => {
+        const errors = {};
+        for (let key in values) {
+            if (!values[key])
+                errors[key] = 'Required'
         }
-        else if (obj === '41-above') {
-            console.log(obj)
-            setData(Data)
+        return errors;
+    }
+    const HandleSubmit = (values, actions) => {
+        console.log(values)
+        const errors = Validate(values)
+        if (!Object.keys(errors).length) {
+            actions.resetForm(); // reset the form values to empty
         }
     }
 
-    function onGridReady(params) {
-        setGridApi(params.api);
-        setGridColumnApi(params.columnApi);
-    }
-    const onFilterTextChange = (e) => {
-        gridApi.setQuickFilter(e.target.value)
-    }
+
     return (
-        <div className="Container">
-            <h3>ALL AVAILABLE BOOKS IN LIBRARY</h3>
-            <div className="dd-search">
-                <div className="AgeCategoryDropdown">
-                    <Dropdown
-                        placeholder={items[0].label}
-                        value={item}
-                        options={items}
-                        onChange={changethedata}
-                    />
-                </div>
-                <div className="searchDivStyle">
-                    <input type="search" className="searchStyle" onChange={onFilterTextChange} placeholder="Search..." />
-                </div>
-            </div>
-            <div className="ag-theme-alpine" id='Table' >
-                <AgGridReact
-                    columnDefs={columnDefs}
-                    rowData={Data}
-                    onGridReady={onGridReady}
-                    defaultColDef={{ flex: 1 }}
-                    // columnTypes={columnTypes}
-                >
-                </AgGridReact>
-                {/* <ToastContainer
-                toastStyle={{ backgroundColor: "#00397A", color: "white" }}
-                className='toaststyles'
-                /> */}
-
-
-            </div>
+        <>
+            <TableHeader>ALL AVAILABLE BOOKS IN LIBRARY</TableHeader>
+            <FormC>
+                <Formik initialValues={{ category: '', age: '' }} onSubmit={HandleSubmit}
+                    validate={Validate}>
+                    {() => (
+                        <Form>
+                            <Field type='text' name='category' placeholder="Enter Category"></Field>
+                            <Field type='number' name='age' placeholder="Enter Age"></Field>
+                            <button type='submit'>Submit</button>
+                        </Form>
+                    )}
+                </Formik>
+            </FormC>
+            <MainDataTable columnDefs={columnDefs} rowData={Data} defaultColDef={{ flex: 1 }} />
             <>
                 <Modal
                     dialogClassName="modalpopup"
@@ -153,7 +101,7 @@ const AllBooks = () => {
                     <PopupForm setShowPopup={setShowPopup} handleClose={handleClose} />
                 </Modal>
             </>
-        </div>
+        </>
     )
 }
 

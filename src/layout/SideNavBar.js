@@ -1,48 +1,25 @@
-import React, { useState } from "react";
-import "./SideNavBar.css";
-import { BiHome } from "react-icons/bi";
-import { AiOutlineSchedule } from "react-icons/ai";
-import { TbBoxMultiple } from "react-icons/tb";
-import { VscFeedback } from "react-icons/vsc";
-import { AiOutlineLogout } from "react-icons/ai";
-import { Link, NavLink, Navigate } from "react-router-dom";
-// import logg from "./../assets/loggo.png"
+import React from "react";
+import { MenuItem, NavMenu, NavUpper, SideNavContainer, Txt } from "./LayoutStyles";
 
 function SideNavBar(props) {
   const { menuItems } = props;
 
   return (
-    <div
-      id="side-nav"
-      className="side-nav-container"
-
-    >
-      <div className="nav-upper">
+    <SideNavContainer>
+      <NavUpper>
         <div className="nav-heading">
-          {/* <button
-            id="hamburger"
-            className="hamburger"
-           
-          >
-          <img src={logg} className='img_logg'/>
-          </button> */}
+          &nbsp;
         </div>
-        <div className="nav-menu">
+        <NavMenu>
           {menuItems.map(({ text, icon, link }) => (
-            <NavLink
-              className="menu-item"
-              to={link}
-              activeClassName="active
-              "
-            >
+            <MenuItem to={link} activeClassName="active">
               {icon}
-              {<p id="txt">{text}</p>}
-            </NavLink>
+              {<Txt>{text}</Txt>}
+            </MenuItem>
           ))}
-        </div>
-      </div>
-
-    </div>
+        </NavMenu>
+      </NavUpper>
+    </SideNavContainer>
   );
 }
 

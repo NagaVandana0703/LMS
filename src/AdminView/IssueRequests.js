@@ -1,90 +1,77 @@
-import React, { useMemo, useState } from "react";
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-enterprise';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.css";
-import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
-
-
-import '../CustomerView/Table.css';
-import '../CustomerView/toast.css';
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState } from "react";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import { AButton,  TableHeader } from "./AVStyles";
+import { ToastContainerTag, ToastDiv } from "../Helpers/ToastStyles";
+import MainDataTable from "../Helpers/MainDataTable";
+import MainToast from "../Helpers/MainToast";
 
 
 
 
-const IssueRequests = () => {
-   
+const IssueRequests = (props) => {
+    const [toastFlag,setToastFlag]=useState(false);
+    const [text,settext]=useState("");
     const Action = (e) => {
 
-        const Delete= () => {
+        const Aprove= () => {
             // setShowPopup(true)
             console.log(e.data)
-            toast(
-                <div className='divtoast'>
-                  Successfully Deleted
-                  &nbsp; &nbsp;
-                  <TaskAltIcon style={{ color: "#00FF29" }} />
-                </div>,
-                {
-                  className: "toasterstyle",
-                  autoClose: "1000",
-                  hideProgressBar: true,
-                }
-              );
+            settext("Successfully Deleted")
+            setToastFlag(!toastFlag);
+            // toast(
+            //     <ToastDiv>
+            //       You have approved {e.data.bookName} book
+            //       &nbsp; &nbsp;
+            //       <TaskAltIcon style={{ color: "#00FF29" }} />
+            //     </ToastDiv>,
+            //     {
+            //       className: "toasterstyle",
+            //       autoClose: "1000",
+            //       hideProgressBar: true,
+            //     }
+            //   );
+            const newData=[];
+            for(let obj of rowData){
+                if(obj.authorName!==e.data.authorName)
+                    newData.push(obj)
+            }
+            setrowData(newData)
+           
         }
         return (
             <>
-                <button onClick={Delete} className='ActionBtn'>Approved</button>
-                <button onClick={Delete} className='RejectBtn'>Rejected</button>
+                <AButton onClick={Aprove}>Approved</AButton>
+               
             </>
         )
     }
     const [columnDefs, setcolumnDefs] = useState([
-        { field: 'title', headerName:'Book Name',type: 'textCol' },
-        { field: 'author',headerName:'Author', type: 'textCol' },
+        { field: 'bookName', headerName:'Book Name',type: 'textCol' },
+        { field: 'authorName',headerName:'Author', type: 'textCol' },
         { field: 'customername', headerName:'Customer Name', type: 'numCol' },
         { headerName: 'Actions', cellRenderer: Action, type: 'btnCol' }
 
     ])
     const [rowData, setrowData] = useState([
-        { title: 'HarryPotter', author: 'Jyothi', customername:'Sanjay' },
-        { title: 'HalfGF', author: 'Chetan', customername:'Hari' },
+        { bookName: 'HarryPotter', authorName: 'Jyothi', customername:'Sanjay' },
+        { bookName: 'HalfGF', authorName: 'Chetan', customername:'Hari' },
        
     ])
-    // const columnTypes = useMemo(() => {
-    //     return {
-    //         textCol: { width: '200px' }
-    //     }
-    // }, [])
-
-
+  
     
     return (
-        <div className="Container">
-            <h3>Customer Requested to Admin to issue these Books</h3>
-            
-            <div className="ag-theme-alpine" id='Table' >
-                <AgGridReact
-                    columnDefs={columnDefs}
-                    rowData={rowData}
-                    defaultColDef={{ flex: 1 }}
-                    // columnTypes={columnTypes}
-                >
-                </AgGridReact>
-                <ToastContainer
+        <>
+            <TableHeader>Customer Requested to Admin to issue these Books</TableHeader>
+            <MainDataTable columnDefs={columnDefs} rowData={rowData} defaultColDef={{flex:1}} />
+            {toastFlag?<MainToast text={text} setToastFlag={setToastFlag}/>:""}
+            <ToastContainerTag
                 toastStyle={{ backgroundColor: "#00397A", color: "white" }}
-                className='toaststyles'
-                />
+               /> 
 
-
-            </div>
             
-        </div>
+        </>
     )
 }
 

@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { AgGridReact } from 'ag-grid-react';
+import { AButton, TableHeader } from "../AdminView/AVStyles";
+import MainDataTable from "../Helpers/MainDataTable";
 
-import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-
-// import './Table.css';
 const IssuedBooks = () => {
     const ReturnAction = () => {
         return (
             <>
-                <button className='ActionBtn'>Return</button>
+                <AButton>Return</AButton>
             </>
         )
     }
@@ -31,16 +29,10 @@ const IssuedBooks = () => {
 
     return (
         <>
-            <div className="Container">
-                <h3>My Issued Books</h3>
-                <div className="ag-theme-alpine" id='Table'>
-                    <AgGridReact
-                        columnDefs={columnDefs}
-                        rowData={rowData}
-                        defaultColDef={{ flex: 1 }}
-                    ></AgGridReact>
-                </div>
-            </div>
+            <>
+                <TableHeader>My Issued Books</TableHeader>
+                <MainDataTable  columnDefs={columnDefs} rowData={rowData} defaultColDef={{ flex: 1 }} />
+            </>
         </>
     )
 }

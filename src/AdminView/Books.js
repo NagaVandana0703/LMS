@@ -1,54 +1,53 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { AgGridReact } from 'ag-grid-react';
-// import 'ag-grid-enterprise';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
-// import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.css";
-import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
-
-
-import '../CustomerView/Table.css';
-import '../CustomerView/toast.css';
-import { ToastContainer, toast } from "react-toastify";
+import React, {  useState } from "react";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import { ALL_BOOKS_DETAILS } from "../reduxsaga/StringConstants";
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { loadAllBooksRequest } from "../reduxsaga/actions";
+import { AButton,  TableHeader } from "./AVStyles";
+import { ToastContainerTag, ToastDiv } from "../Helpers/ToastStyles";
+import MainDataTable from "../Helpers/MainDataTable";
+import MainToast from "../Helpers/MainToast";
+
 
 
 
 
 const Books = () => {
-   
+    const [toastFlag,setToastFlag]=useState(false);
+    const [text,settext]=useState("");
     const Action = (e) => {
 
         const Delete= () => {
             // setShowPopup(true)
             console.log(e.data)
-            // const newData=[];
-            // for(let obj of Data){
+            console.log(rowData)
+            var newData = rowData.filter((obj) => obj.authorName != e.data.authorName);
+            // for(let obj of rowData){
             //     if(obj.authorName!==e.data.authorName)
             //         newData.push(obj)
             // }
-            // setData(newData)
+            setrowData(newData)
+            
+            console.log(rowData)
+            settext("Successfully Deleted")
+            setToastFlag(!toastFlag);
             // toast(
-            //     <div className='divtoast'>
+            //     <ToastDiv>
             //       Successfully Deleted
             //       &nbsp; &nbsp;
             //       <TaskAltIcon style={{ color: "#00FF29" }} />
-            //     </div>,
+            //     </ToastDiv>,
             //     {
             //       className: "toasterstyle",
             //       autoClose: "1000",
             //       hideProgressBar: true,
             //     }
-            //   );
+            //    );
         }
         return (
             <>
-                <button onClick={Delete} className='ActionBtn'>Delete</button>
+                <AButton onClick={Delete} >Delete</AButton>
             </>
         )
     }
@@ -57,12 +56,13 @@ const Books = () => {
         { field: 'bookName' ,headerName:'Book Name'},
         { field: 'authorName' ,headerName:'Author Name'},
         { field: 'quantity',headerName:'Quantity'},
-        { field: 'quantity',headerName:'Category'},
-        // { field: 'bookCategory.category',headerName:'Category'},
+        // { field: 'quantity',headerName:'Category'},
+        { field: 'bookCategory.category',headerName:'Category'},
         { headerName: 'Actions', cellRenderer: Action}
 
     ])
-    const [Data, setData] = useState([
+   
+    const [rowData, setrowData] = useState([
         { bookId: '1', bookName: 'HarryPotter', authorName: 'Jyothi', quantity: 5 },
         { bookId: '2', bookName: 'HalfGF', authorName: 'Chetan', quantity: 3 },
         { bookId: '3', bookName: 'RichDad', authorName: 'Robert', quantity: 15 },
@@ -85,46 +85,29 @@ const Books = () => {
     ])
     const token=localStorage.getItem('authtoken');
     console.log(token)
+    const D=useSelector(state=>state.AdminView)
+    const allbooksdata=D.allbooksdetailsdata
+    console.log(allbooksdata) 
+    //const [rowData,setrowData]=useState([])
     const dispatch=useDispatch();
     
     
-    useEffect(()=>{
-        dispatch(loadAllBooksRequest());
-    },[])
-    const D=useSelector(state=>state.AdminView)
-    const allbooksdata=D.allbooksdetailsdata
-    console.log(allbooksdata)
-    // const columnTypes = useMemo(() => {
-    //     return {
-    //         textCol: { width: '200px' }
-    //     }
-    // }, [])
-
-
-    
+    // useEffect(()=>{
+    //     if(allbooksdata.length===0)
+    //         dispatch(loadAllBooksRequest());
+    //     else
+    //         setrowData(allbooksdata)
+    // },[dispatch,rowData])
+      
     return (
-        <div className="Container">
-            <h3>ALL AVAILABLE BOOKS IN LIBRARY</h3>
-          
-            <div className="ag-theme-alpine" id='Table' >
-                <AgGridReact
-                    columnDefs={columnDefs}
-                    rowData={allbooksdata}
-                    defaultColDef={{ flex: 1  }}
-                    // columnTypes={columnTypes}
-                    pagination={true}
-                    paginationPageSize='7'
-                >
-                </AgGridReact>
-                <ToastContainer
+        <>
+            <TableHeader>ALL AVAILABLE BOOKS IN LIBRARY</TableHeader>                       
+            <MainDataTable columnDefs={columnDefs} rowData={rowData} defaultColDef={{flex:1}}/>
+            <ToastContainerTag
                 toastStyle={{ backgroundColor: "#00397A", color: "white" }}
-                className='toaststyles'
-                />
-
-
-            </div>
-            
-        </div>
+            />
+            {toastFlag?<MainToast text={text} setToastFlag={setToastFlag}/>:""}
+        </>
     )
 }
 

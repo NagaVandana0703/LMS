@@ -1,60 +1,78 @@
-import { Field, Form, Formik } from "formik";
+import {  ErrorMessage, Form, Formik } from "formik";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { loadAddBookRequest } from "../reduxsaga/actions";
-import './AddBooks.css';
-// import "primereact/resources/themes/lara-light-indigo/theme.css";
-// import "primereact/resources/primereact.css";
-// import 'ag-grid-enterprise';
-// import 'ag-grid-community/styles/ag-grid.css';
-// import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { Button, FieldBox, FormContainer, FormHeader } from "./AVStyles";
+
 
 const AddBooks = () => {
     const dispatch=useDispatch();
-    const HandleSubmit = (values) => {
-        console.log(values)
-        dispatch(loadAddBookRequest(values))
+
+    const Validate=(values)=> {
+        const errors = {};
+
+        if (!values.bookName) {
+          errors.bookName = 'Required';
+        }
+      
+        if (!values.authorName) {
+          errors.authorName = 'Required';
+        }
+      
+        if (!values.bookCategory.category) {
+          errors.bookCategory = {category: 'Required'};
+        }
+      
+        if (!values.bookCategory.minAge) {
+          errors.bookCategory = {...errors.bookCategory, minAge: 'Required'};
+        } else if (isNaN(values.bookCategory.minAge)) {
+          errors.bookCategory = {...errors.bookCategory, minAge: 'Must be a number'};
+        }
+      
+        if (!values.quantity) {
+          errors.quantity = 'Required';
+        } else if (isNaN(values.quantity)) {
+          errors.quantity = 'Must be a number';
+        }
+        return errors;
+    }
+    const HandleSubmit = (values,actions) => {
         
+        console.log(values)
+        const errors=Validate(values)
+ 
+        if (!Object.keys(errors).length) {
+            actions.resetForm(); // reset the form values to empty
+          }
+        dispatch(loadAddBookRequest(values))        
     }
     return (
         <>
-            <div className="formContainer">
-                <div className="formHeader">
-                    <h4>Add a New Book</h4>
-                </div>
-                <div className="form">
+            <FormContainer>
+                <FormHeader>
+                    <h4>Add New Book</h4>
+                </FormHeader>                
                     <Formik
                         initialValues={{ bookName: '', authorName: '', bookCategory: {category:'',minAge:''}, quantity: '' }}
-                        onSubmit={values => HandleSubmit(values)}
-                        
-                        
+                        validate={Validate}
+                        onSubmit={HandleSubmit}                                                
                     >
-                        {() => (
-                            <Form>
-                                <div >
-                                    <Field type='text' className="fieldInputBox" name='bookName' placeholder='Book Name' />
-                                </div>
-                                <div >
-                                    <Field type='text' className="fieldInputBox" name='authorName' placeholder='AuthorName' />
-                                </div>
-                                <div >
-                                    <Field type='text' className="fieldInputBox" name='bookCategory.category' placeholder='Book Category' />
-                                </div>
-                                <div >
-                                    <Field type='number' className="fieldInputBox" name='bookCategory.minAge' placeholder='Minimum Age' />
-                                </div>
-                                <div >
-                                    <Field type='number' className="fieldInputBox" name='quantity' placeholder='Quantity' />
-                                </div>
-                                <div className="SubmitBtn">
-                                    <button type="submit">Add Book</button>
-                                </div>
-
+                        {({ isSubmitting }) => (
+                            <Form>                                
+                                    <FieldBox type='text' className="fieldInputBox" name='bookName' placeholder='Book Name' /> 
+                                    <ErrorMessage name='bookName' />                              
+                                    <FieldBox type='text' className="fieldInputBox" name='authorName' placeholder='AuthorName' />  
+                                    <ErrorMessage name='authorName' />                               
+                                    <FieldBox type='text' className="fieldInputBox" name='bookCategory.category' placeholder='Book Category' /> 
+                                    <ErrorMessage name='bookCategory.category' />                                
+                                    <FieldBox type='number' className="fieldInputBox" name='bookCategory.minAge' placeholder='Minimum Age' />
+                                    <ErrorMessage name='bookCategory.minAge' />                                   
+                                    <FieldBox type='number' className="fieldInputBox" name='quantity' placeholder='Quantity' />                                                            
+                                    <Button type="submit" disabled={isSubmitting}>Add Book</Button>                               
                             </Form>
                         )}
-                    </Formik>
-                </div>
-            </div>
+                    </Formik>              
+            </FormContainer>
         </>
     )
 }
