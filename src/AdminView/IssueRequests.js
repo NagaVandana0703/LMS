@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
@@ -47,13 +47,13 @@ const IssueRequests = (props) => {
             </>
         )
     }
-    const [columnDefs, setcolumnDefs] = useState([
+    const columnDefs = useMemo(()=>[
         { field: 'bookName', headerName:'Book Name',type: 'textCol' },
         { field: 'authorName',headerName:'Author', type: 'textCol' },
         { field: 'customername', headerName:'Customer Name', type: 'numCol' },
         { headerName: 'Actions', cellRenderer: Action, type: 'btnCol' }
 
-    ])
+    ],[])
     const [rowData, setrowData] = useState([
         { bookName: 'HarryPotter', authorName: 'Jyothi', customername:'Sanjay' },
         { bookName: 'HalfGF', authorName: 'Chetan', customername:'Hari' },

@@ -3,13 +3,10 @@ import React,{Suspense,lazy} from 'react';
 import { BrowserRouter as Router,Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './reduxsaga/store';
-import { CVMenuItems } from './layout/SidenavbarMenuItems';
-
 
 
 const CVLayout=lazy(()=>import('./CustomerView/CVLayout'));
 const AVlayout=lazy(()=>import('./AdminView/AVlayout'));
-
 const LoginPage=lazy(()=>import('./components/LoginPage'));
 const AllBooks=lazy(()=>import('./CustomerView/AllBooks'));
 const IssueReqHistory=lazy(()=>import('./CustomerView/IssueReqHistory'));
@@ -29,7 +26,7 @@ function App() {
         <Routes>
           
             <Route exact path="/" element={<LoginPage />} />
-            <Route path='/AllBooks' element={<CVLayout element={AllBooks} menuitems={CVMenuItems}/>} />
+            <Route path='/AllBooks' element={<CVLayout element={AllBooks} />} />
             <Route path='/IssueReqHistory' element={<CVLayout element={IssueReqHistory}/>} />
             <Route path='/IssuedBooks' element={<CVLayout element={IssuedBooks}/>} />
             <Route path='/OverDue' element={<CVLayout element={OverDue}/>} />
@@ -37,8 +34,7 @@ function App() {
             <Route path='/ManageCustomers' element={<AVlayout element={ManageCustomers}/>} />
             <Route path='/IssueRequests' element={<AVlayout element={IssueRequests}/>} />
             <Route path='/AddBooks' element={<AVlayout element={AddBooks} />} />
-            <Route path='/AddCategory' element={<AVlayout element={AddCategory}/>} />
-           
+            <Route path='/AddCategory' element={<AVlayout element={AddCategory}/>} />           
           </Routes>
           </Suspense>
         </Router>

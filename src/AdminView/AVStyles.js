@@ -1,5 +1,5 @@
 import { AgGridReact } from "ag-grid-react";
-import { Field } from "formik";
+import { ErrorMessage, Field } from "formik";
 import styled from "styled-components";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -50,7 +50,11 @@ cursor:pointer;
     width:100%
 }
 &.LRformsubmit{
-    width:30%
+    width:50%
+}
+&.LRformsubmitR{
+  width:30%
+  //margin-left:30px
 }
 
 `
@@ -68,7 +72,21 @@ height: 30px;
         margin-left:20px
     }
 `
+export const AlterOption=styled.a`
 
+cursor:pointer;
+color:blue;
+margin-left:30px
+// margin-right:-30px
+`
+export const ErrorMessageDiv=styled(ErrorMessage)`
+color:red;
+margin-left:12px
+`
+export const LabelDate=styled.label`
+margin-left:-50px
+
+`
 //DataTable styling
 
 export const TableHeader=styled.h3`

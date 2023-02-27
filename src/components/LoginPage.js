@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import { loadTokenRequest } from "../reduxsaga/actions";
 import { Btn, FieldBox1, FlexContainer, FlexContainerDiv } from "./Styles";
-import { Button, FieldBox } from "../AdminView/AVStyles";
+import { AlterOption, Button, FieldBox } from "../AdminView/AVStyles";
 
 const Loginform = ({ path, dispatch, navigate }) => {
     const Validate=(values)=>{
@@ -63,7 +63,7 @@ const LoginPage = () => {
                     {flag ? <RegisterForm setFlag={setFlag} /> : <>
                         <Loginform path='/AllBooks' dispatch={dispatch} navigate={navigate} />
                     </>}
-                    {flag ? '' : <p>New User?<a onClick={() => setFlag(true)} id='registerBtn'>Register</a></p>}
+                    {flag ? '' : <p>New User?<AlterOption onClick={() => setFlag(true)} >Register</AlterOption></p>}
                 </FlexContainerDiv>
             </FlexContainer>
         </div>

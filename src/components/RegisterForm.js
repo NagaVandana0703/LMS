@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loadUserRegisterRequest } from '../reduxsaga/actions';
 import { Btn, FieldBox1 } from './Styles';
+import { AlterOption, Button, ErrorMessageDiv, FieldBox, LabelDate } from '../AdminView/AVStyles';
 
 const RegisterForm = ({ setFlag }) => {
     const navigate = useNavigate()
@@ -43,40 +44,34 @@ const RegisterForm = ({ setFlag }) => {
             >
                 {() => (
                     <Form >
-                        <FieldBox1>
-                            <Field id='username' type='text' name='username' placeholder='UserName' />
-                            <ErrorMessage name='username' />
-                        </FieldBox1>
-                        <FieldBox1>
-                            <Field id='password' type='password' name='password' placeholder='Password' />
+                            
+                            <FieldBox className='LRforminput' id='username' type='text' name='username' placeholder='UserName' />
+                            <ErrorMessageDiv name='username' component='span'/>
+                     
+                            <FieldBox className='LRforminput' id='password' type='password' name='password' placeholder='Password' />
                             <ErrorMessage name='password' />
-                        </FieldBox1>
-                        <FieldBox1>
+                
 
-                            <Field id='phonenumber' type='number' name='phoneNumber' placeholder='PhoneNumber' />
+                            <FieldBox className='LRforminput' id='phonenumber' type='number' name='phoneNumber' placeholder='PhoneNumber' />
                             <ErrorMessage name='phonenumber' />
-                        </FieldBox1>
-                        <FieldBox1>
+                     
 
-                            <Field id='emailid' type='email' name='emailId' placeholder='EmailId' />
+                            <FieldBox className='LRforminput' id='emailid' type='email' name='emailId' placeholder='EmailId' />
                             <ErrorMessage name='emailid' />
-                        </FieldBox1>
-                        <FieldBox1>
+                  
 
-                            <Field id='gender' type='gender' name='sex' placeholder='Gender' />
+                            <FieldBox className='LRforminput' id='gender' type='gender' name='sex' placeholder='Gender' />
                             <ErrorMessage name='gender' />
-                        </FieldBox1>
-                        <FieldBox1>
+                      
 
-                            <Field id='address' type='text' name='hometown' placeholder='Address' />
+                            <FieldBox className='LRforminput' id='address' type='text' name='hometown' placeholder='Address' />
                             <ErrorMessage name='address' />
-                        </FieldBox1>
-                        <FieldBox1>
-                            <label>DOB : &nbsp;</label>
-                            <Field id='dob' type='date' name='dob' />
+                            <div>
+                            <LabelDate>DOB : &nbsp;</LabelDate>
+                            <FieldBox className='LRforminput'  type='date' name='dob' />
                             <ErrorMessage name='dob' />
-                        </FieldBox1>
-                        <Btn type='submit' className='regBtn'>Register</Btn><span><a onClick={() => setFlag(false)}>Login</a></span>
+                            </div>
+                        <Button type='submit' className="LRformsubmitR">Register</Button><span><AlterOption onClick={() => setFlag(false)} >Login</AlterOption></span>
                     </Form>
                 )}
             </Formik>
