@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,8 @@ const RegisterForm = ({ setFlag }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const initialValues = { username: '', password: '', phoneNumber: '', emailId: '', sex: '', hometown: '', dob: '' };
-    const validate = (values) => {
+    const validate = useCallback((values) => {
+   
         const errors = {};
         for (let key in values) {
             if (!values[key])
@@ -17,7 +18,7 @@ const RegisterForm = ({ setFlag }) => {
         }
 
         return errors;
-    }
+    },[])
     const HandleSubmit = (e, values) => {
         console.log(values);
         const errors = {};

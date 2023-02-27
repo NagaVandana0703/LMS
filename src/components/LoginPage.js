@@ -5,39 +5,39 @@ import { useDispatch } from "react-redux";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import { loadTokenRequest } from "../reduxsaga/actions";
 import { Btn, FieldBox1, FlexContainer, FlexContainerDiv } from "./Styles";
+import { Button, FieldBox } from "../AdminView/AVStyles";
 
 const Loginform = ({ path, dispatch, navigate }) => {
-    console.log('c')
-    return (
-        <>
-            <Formik
-                initialValues={{ username: '', password: '' }}
-                validate={values => {
-                    const errors = {};
+    const Validate=(values)=>{
+        const errors = {};
                     for (let key in values) {
                         if (!values[key])
                             errors[key] = 'Required'
                     }
                     return errors;
-                }}
-                onSubmit={(values) => {
-                    console.log(values);
+    }
+    const HandleSubmit=(values)=>{
+     console.log(values);
                     dispatch(loadTokenRequest(values))
-                    navigate(`${path}`)
-
-                }}
+                    navigate(`${path}`)   
+    }
+    return (
+        <>
+            <Formik
+                initialValues={{ username: '', password: '' }}
+                validate={Validate}
+                onSubmit={HandleSubmit}
             >
                 {() => (
                     <Form >
-                        <FieldBox1>
-                            <Field id='username' type='text' name='username' placeholder='UserName' />
+                        {/* <FieldBox1> */}
+                            <FieldBox className='LRforminput' id='username' type='text' name='username' placeholder='UserName' />
                             <ErrorMessage name="username" />
-                        </FieldBox1>
-                        <FieldBox1>
-                            <Field id='password' type='password' name='password' placeholder='Password' />
+                      
+                            <FieldBox className='LRforminput' id='password' type='password' name='password' placeholder='Password' />
                             <ErrorMessage name="password" />
-                        </FieldBox1>
-                        <Btn type="submit">Login</Btn>
+                    
+                        <Button  className="LRformsubmit" type="submit">Login</Button>
                     </Form>
                 )}
             </Formik>
@@ -51,7 +51,6 @@ const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const token = localStorage.getItem('authtoken')
-
     return (
         <div>
             <FlexContainer>
@@ -71,4 +70,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage;
+export default React.memo(LoginPage);

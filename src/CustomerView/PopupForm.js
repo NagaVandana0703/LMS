@@ -2,16 +2,18 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import { StyledButton, FormGroup, DateWrapper, DatesWrapper, PopupWrapper, PopupInnerWrapper } from "./CVStyles";
 import "primeicons/primeicons.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
+import { Button, FieldBox, FormContainer, FormHeader } from "../AdminView/AVStyles";
 const PopupForm = ({ setShowPopup, handleClose }) => {
   return (
     <>
-      <PopupWrapper>
-        <PopupInnerWrapper>
-          <h2>Issue Book</h2>
+      <FormContainer className="popup">
+
+          <FormHeader>
+            <h3>Issue Book</h3>
+            </FormHeader>
           <Formik
             initialValues={{ bookName: "", issueDate: "", returnDate: "" }}
             onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -24,34 +26,23 @@ const PopupForm = ({ setShowPopup, handleClose }) => {
             {({ isSubmitting }) => (
               <Form>
 
-                <FormGroup>
-                  <label htmlFor="bookName">Book Name:</label>
-                  <Field type="text" name="bookName" />
+                  <FieldBox className='popupinput' type="text" name="bookName" placeholder="Book Name" />
                   <ErrorMessage name="bookName" />
-                </FormGroup>
-                <DatesWrapper>
-                  <DateWrapper>
-                    <FormGroup>
-                      <label htmlFor="issueDate">Issue Date:</label>
-                      <Field type="date" name="issueDate" />
-                      <ErrorMessage name="issueDate" />
-                    </FormGroup>
-                  </DateWrapper>
-                  <DateWrapper isReturnDate>
-                    <FormGroup id='returnDate'>
-                      <label htmlFor="returnDate">Return Date:</label>
-                      <Field type="date" name="returnDate" />
-                      <ErrorMessage name="returnDate" />
-                    </FormGroup>
-                  </DateWrapper>
-                </DatesWrapper>
-                <StyledButton type="submit" disabled={isSubmitting}>Submit</StyledButton>
+
+                  <label htmlFor="issueDate">Issue Date:</label>
+                  <FieldBox className='popupinput' type="date" name="issueDate" />
+                  <ErrorMessage name="issueDate" />
+          
+                  <label htmlFor="returnDate">Return Date:</label>
+                  <FieldBox className='popupinput' type="date" name="returnDate" />
+                  <ErrorMessage name="returnDate" />
+
+                <Button className='popupsubmit' type="submit" disabled={isSubmitting}>Submit</Button>
 
               </Form>
             )}
           </Formik>
-        </PopupInnerWrapper>
-      </PopupWrapper>
+      </FormContainer>
     </>
   );
 };

@@ -7,10 +7,15 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 export const FormContainer = styled.div`
 position: relative;
 top:20%;
-left: 30%;
+left: 15%;
 border: 2px solid #eee;
-width: 700px;
+width: 55%;
 height: 400px;
+&.popup{
+    border:none;
+}
+
+
 `
 export const FormHeader=styled.div`
 text-align: center;
@@ -23,6 +28,13 @@ width: 600px;
     left:5%;
     border: 1px solid #ebe3e3;
     padding: 5px;
+  &.popupinput{
+    width: 100%;
+  }
+  &.LRforminput{
+ 
+width: 50%;
+  }
 `
 export const Button=styled.button`
 position: relative;
@@ -34,7 +46,12 @@ color: white;
 border: 1px solid #134ee3;
 padding: 5px;
 cursor:pointer;
-
+&.popupsubmit{
+    width:100%
+}
+&.LRformsubmit{
+    width:30%
+}
 
 `
 export const AButton=styled.button`

@@ -59,15 +59,15 @@ const AddBooks = () => {
                     >
                         {({ isSubmitting }) => (
                             <Form>                                
-                                    <FieldBox type='text' className="fieldInputBox" name='bookName' placeholder='Book Name' /> 
+                                    <FieldBox type='text'  name='bookName' placeholder='Book Name' /> 
                                     <ErrorMessage name='bookName' />                              
-                                    <FieldBox type='text' className="fieldInputBox" name='authorName' placeholder='AuthorName' />  
+                                    <FieldBox type='text'  name='authorName' placeholder='AuthorName' />  
                                     <ErrorMessage name='authorName' />                               
-                                    <FieldBox type='text' className="fieldInputBox" name='bookCategory.category' placeholder='Book Category' /> 
+                                    <FieldBox type='text'  name='bookCategory.category' placeholder='Book Category' /> 
                                     <ErrorMessage name='bookCategory.category' />                                
-                                    <FieldBox type='number' className="fieldInputBox" name='bookCategory.minAge' placeholder='Minimum Age' />
+                                    <FieldBox type='number'  name='bookCategory.minAge' placeholder='Minimum Age' />
                                     <ErrorMessage name='bookCategory.minAge' />                                   
-                                    <FieldBox type='number' className="fieldInputBox" name='quantity' placeholder='Quantity' />                                                            
+                                    <FieldBox type='number'  name='quantity' placeholder='Quantity' />                                                            
                                     <Button type="submit" disabled={isSubmitting}>Add Book</Button>                               
                             </Form>
                         )}

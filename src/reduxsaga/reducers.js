@@ -16,7 +16,7 @@ const initialState={
   
 };
 export function AVReducer(state = initialState, action) {
-   
+
    switch (action.type) {
       
         case REDUCER_OPERATIONS.LOAD_USERS_LOADING: {
@@ -50,6 +50,7 @@ export function AVReducer(state = initialState, action) {
         }
 
         case REDUCER_OPERATIONS.LOAD_ALL_BOOKS_DETAILS_SUCCESS: {
+            console.log(action.data)
             return {
                 ...state,
                 allbooksdetailsdata: action.data,
@@ -57,6 +58,7 @@ export function AVReducer(state = initialState, action) {
             }
         }
         case REDUCER_OPERATIONS.LOAD_ALL_USERS_DETAILS_SUCCESS: {
+            console.log(action.data)
             return {
                 ...state,
                 allusersdata: action.data,

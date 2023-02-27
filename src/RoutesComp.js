@@ -14,79 +14,42 @@ import IssueReqHistory from "./CustomerView/IssueReqHistory";
 import OverDue from "./CustomerView/OverDue";
 
 
-const View = ({ Layout, path, Component }) => {
+const View = ({ Layout, path, element }) => {
   return (
     <Routes>
-      <Route exact path={path} element={<Layout Component={Component} />} />
+      <Route exact path={path} element={<Layout element={element} />} />
     </Routes>
   )
 }
 
 function RoutesComp() {
-  const location = useLocation();
-  console.log("pathname", location.pathname);
-  switch (window.location.pathname) {
-    case "/":
+ 
       return (
         <>
           <Routes>
             <Route exact path="/" element={<LoginPage />} />
+            <Route path='/AllBooks' element={<CVLayout element={AllBooks} />} />
+            <Route path='/IssueReqHistory' element={<CVLayout element={IssueReqHistory}/>} />
+            <Route path='/IssuedBooks' element={<CVLayout element={IssuedBooks}/>} />
+            <Route path='/OverDue' element={<CVLayout element={OverDue}/>} />
+            <Route exact path='/Books' element={<AVlayout element={Books} />}/>
+            <Route path='/ManageCustomers' element={<AVlayout element={ManageCustomers}/>} />
+            <Route path='/IssueRequests' element={<AVlayout element={IssueRequests}/>} />
+            <Route path='/AddBooks' element={<AVlayout element={AddBooks} />} />
+            <Route path='/AddCategory' element={<AVlayout element={AddCategory}/>} />
           </Routes>
         </>
       );
 
-    case "/AllBooks":
+   
+   
 
-      return (
-        <>
-          <View Layout={CVLayout} path={"/AllBooks"} Component={AllBooks} />
-        </>
+    
+   
 
-      );
-    case "/IssueReqHistory":
-      return (
-        <View Layout={CVLayout} path={"/IssueReqHistory"} Component={IssueReqHistory} />
-
-      );
-
-    case "/IssuedBooks":
-      return (
-        <View Layout={CVLayout} path={"/IssuedBooks"} Component={IssuedBooks} />
-
-      );
-      case "/OverDue":
-      return (
-        <View Layout={CVLayout} path={"/OverDue"} Component={OverDue} />
-
-      );
-
-
-    //Admin View
-
-    case "/Books":
-      return (
-        <View Layout={AVlayout} path={"/Books"} Component={Books} />
-      );
-
-    case "/ManageCustomers":
-      return (
-        <View Layout={AVlayout} path={"/ManageCustomers"} Component={ManageCustomers} />
-      );
-    case "/IssueRequests":
-      return (
-        <View Layout={AVlayout} path={"/IssueRequests"} Component={IssueRequests} />
-      );
-    case "/AddBooks":
-      return (
-        <View Layout={AVlayout} path={"/AddBooks"} Component={AddBooks} />
-
-      );
-    case "/AddCategory":
-      return (
-        <View Layout={AVlayout} path={"/AddCategory"} Component={AddCategory} />
-      )
+   
 
   }
-}
 
-export default RoutesComp;
+
+export default React.memo(RoutesComp);

@@ -6,22 +6,15 @@ import { VscFeedback } from "react-icons/vsc";
 import React,{useEffect,useState} from 'react';
 import {Navigate} from 'react-router-dom';
 import MainLayout from "../layout/MainLayout";
-function CVLayout({ Component }) {
-  console.log('CVlayout')
-  const [isExpanded, setExpendState] = useState(false);
-//   const [accesstoken,setAccessToken]=useState(" ")
+function CVLayout({ element }) {
+ 
 
-//   useEffect(() => {
-//     setAccessToken(localStorage.getItem('access_token'))
-//   },[]);
   const menuItems = [
     {
       text: "AllBooks",
       icon: (
         <BiHome
           size="1.6em"
-          onMouseOver={() => setExpendState(!isExpanded)}
-          onBlur={() => setExpendState(!isExpanded)}
         />
       ),
       link: "/AllBooks",
@@ -32,8 +25,6 @@ function CVLayout({ Component }) {
       icon: (
         <AiOutlineSchedule
           size="1.6em"
-          onMouseOver={() => setExpendState(!isExpanded)}
-          onBlur={() => setExpendState(!isExpanded)}
         />
       ),
       link: "/IssueReqHistory",
@@ -44,8 +35,6 @@ function CVLayout({ Component }) {
       icon: (
         <TbBoxMultiple
           size="1.6em"
-          onMouseOver={() => setExpendState(!isExpanded)}
-          onBlur={() => setExpendState(!isExpanded)}
         />
       ),
       link: "/IssuedBooks",
@@ -56,8 +45,7 @@ function CVLayout({ Component }) {
       icon: (
         <TbBoxMultiple
           size="1.6em"
-          onMouseOver={() => setExpendState(!isExpanded)}
-          onBlur={() => setExpendState(!isExpanded)}
+         
         />
       ),
       link: "/OverDue",
@@ -68,7 +56,7 @@ function CVLayout({ Component }) {
   return (
     <div>
       
-      <MainLayout Component={Component} menuItems={menuItems} />
+      <MainLayout Component={element} menuItems={menuItems} />
     </div>
   );
 }

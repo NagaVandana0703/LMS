@@ -35,11 +35,11 @@ const AddCategory = () => {
                 >
                     {({isSubmitting}) => (
                         <Form>
-                            <FieldBox type='text' className="fieldInputBox" name='category' placeholder='Category Name' />
+                            <FieldBox type='text'  name='category' placeholder='Category Name' />
                             <ErrorMessage name='category' />
-                            <FieldBox type='number' className="fieldInputBox" name='minAge' placeholder='Enter Min Age' />
+                            <FieldBox type='number'  name='minAge' placeholder='Enter Min Age' />
                             <ErrorMessage name='minAge' />
-                            <FieldBox type='number' className="fieldInputBox" name='maxAge' placeholder='Enter Max Age' />
+                            <FieldBox type='number'  name='maxAge' placeholder='Enter Max Age' />
                             <ErrorMessage name='maxAge' />
                             <Button type="submit" disabled={isSubmitting}>Add Category</Button>
                         </Form>

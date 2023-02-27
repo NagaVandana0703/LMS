@@ -3,8 +3,9 @@ import Header from "./Header";
 import React from "react";
 import { ComponentContainer, ComponentFooter, MainBlockLayout, RightContainer } from "./LayoutStyles";
 const MainLayout = (props) => {
-  const { menuItems, Component } = props;
-
+  console.log(props.element,props.menuitems)
+  const {Component, menuItems  } = props;
+console.log(menuItems,Component)
   return (
     <MainBlockLayout>
       <SideNavBar menuItems={menuItems} />

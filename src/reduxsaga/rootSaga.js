@@ -1,110 +1,92 @@
-import { put,call, takeEvery, all } from 'redux-saga/effects';
+import { put, call, takeEvery, all } from 'redux-saga/effects';
 import { REDUCER_OPERATIONS } from './StringConstants';
-import { act } from 'react-dom/test-utils';
 import axios from '../components/Axios';
-import { useSelector } from 'react-redux';
+import { allusers } from './jsondata';
 
- 
-function*  authenticate(action) {
+// export function* authenticateSaga() {
+
+//   yield takeEvery(REDUCER_OPERATIONS.LOAD_AUTHENTICATE_TOKEN_REQUEST, asyncFunc);
+
+// }
+// export function* userRegisterSaga() {
+
+//   yield takeEvery(REDUCER_OPERATIONS.LOAD_USER_REGISTER_REQUEST, asyncFunc);
+
+// }
+// export function* allUsersDetailsSaga() {
+
+//   yield takeEvery(REDUCER_OPERATIONS.LOAD_ALL_USERS_DETAILS_REQUEST, asyncFunc);
+
+// }
+
+// export function* allBooksDetailsSaga() {
+
+//    yield takeEvery(REDUCER_OPERATIONS.LOAD_ALL_BOOKS_DETAILS_REQUEST, asyncFunc);
+
+// }
+//  export function* addBookSaga() {
+
+//     yield takeEvery(REDUCER_OPERATIONS.LOAD_ADD_BOOK_REQUEST, asyncFunc);
+
+//  }
+
+//  export function* addCategorySaga() {
+
+//     yield takeEvery(REDUCER_OPERATIONS.LOAD_ADD_CATEGORY_REQUEST, asyncFunc);
+
+//  }
+
+
+function* asyncFunc(action) {
+  
+  
   console.log(action)
+  var success = action.success;
+  yield put({ type: success , data: action.dummydata });
+  console.log(action.dummydata)
   try {
-      const users = yield call(axios.post,'http://localhost:8081/authenticate',action.payload);
-      console.log(users);
-     
-    const token=users.data.token;
-
-    console.log(token);
-   
-    localStorage.setItem('authtoken', token)
-      yield put({type: REDUCER_OPERATIONS.LOAD_AUTHENTICATE_TOKEN_SUCCESS, data: users.data.token});
-  } catch (e) {
-      yield put({type: REDUCER_OPERATIONS.LOAD_USERS_ERROR, error: e.message});
-  }
-}
- export function* authenticateSaga() {
-   
-    yield takeEvery(REDUCER_OPERATIONS.LOAD_AUTHENTICATE_TOKEN_REQUEST, authenticate);
-     
- }
-
- function* fetchallBooksDetails() {
-  try {
-    const users = yield call(axios.get,'http://localhost:8081/book');
-      console.log(users);
-      yield put({type: REDUCER_OPERATIONS.LOAD_ALL_BOOKS_DETAILS_SUCCESS, data: users.data});
-  } catch (e) {
-      yield put({type: REDUCER_OPERATIONS.LOAD_USERS_ERROR, error: e.message});
-  }
-}
-export function* allBooksDetailsSaga() {
-   
-   yield takeEvery(REDUCER_OPERATIONS.LOAD_ALL_BOOKS_DETAILS_REQUEST, fetchallBooksDetails);
-    
-}
-function* fetchallUsersDetailsDetails() {
-    try {
-        const users = yield call(axios.get,'http://localhost:8081/user');
-        console.log(users)
-        yield put({type: REDUCER_OPERATIONS.LOAD_ALL_USERS_DETAILS_SUCCESS, data: users.data});
-    } catch (e) {
-        yield put({type: REDUCER_OPERATIONS.LOAD_USERS_ERROR, error: e.message});
+    if (action.payload)
+      var users = yield call(axios.post, `http://localhost:8081/${action.link}`, action.payload);
+    else{
+ 
+      var users = yield call(axios.get, `http://localhost:8081/${action.link}`);
     }
- }
-export function* allUsersDetailsSaga() {
-   
-    yield takeEvery(REDUCER_OPERATIONS.LOAD_ALL_USERS_DETAILS_REQUEST, fetchallUsersDetailsDetails);
-     
- }
- function*  addBook(action) {
-  try {
-      const users = yield call(axios.post,'http://localhost:8081/saveBook',action.payload);
-      console.log(users);
-      yield put({type: REDUCER_OPERATIONS.LOAD_ADD_BOOK_SUCCESS, data: users.data});
-  } catch (e) {
-      yield put({type: REDUCER_OPERATIONS.LOAD_USERS_ERROR, error: e.message});
-  }
-}
- export function* addBookSaga() {
-   
-    yield takeEvery(REDUCER_OPERATIONS.LOAD_ADD_BOOK_REQUEST, addBook);
-     
- }
- function*  addCategory(action) {
-  try {
-      const users = yield call(axios.post,'http://localhost:8081/createCategory',action.payload);
-      console.log(users);
-      yield put({type: REDUCER_OPERATIONS.LOAD_ADD_CATEGORY_SUCCESS, data: users.data});
-  } catch (e) {
-      yield put({type: REDUCER_OPERATIONS.LOAD_USERS_ERROR, error: e.message});
-  }
-}
- export function* addCategorySaga() {
-   
-    yield takeEvery(REDUCER_OPERATIONS.LOAD_ADD_CATEGORY_REQUEST, addCategory);
-     
- }
- function* fetchuserRegister() {
-  try {
-    const users = yield call(axios.get,'http://localhost:8081/userRequest');
-      console.log(users);
-      yield put({type: REDUCER_OPERATIONS.LOAD_USER_REGISTER_SUCCESS, data: users.data});
-  } catch (e) {
-      yield put({type: REDUCER_OPERATIONS.LOAD_USERS_ERROR, error: e.message});
-  }
-}
-export function* userRegisterSaga() {
-   
-   yield takeEvery(REDUCER_OPERATIONS.LOAD_USER_REGISTER_REQUEST, fetchuserRegister);
     
+    var success = action.success;
+    yield put({ type: success , data: users.data });
+  } catch (e) {
+   
+    yield put({ type: REDUCER_OPERATIONS.LOAD_USERS_ERROR, error: e.message });
+  }
 }
-export default function* rootSaga() {
+
+
+export  function* Saga() {
 
   yield all([
-    authenticateSaga(),
-    userRegisterSaga(),
-    allBooksDetailsSaga(),
-    allUsersDetailsSaga(),
-    addBookSaga(),
-    addCategorySaga()
+    yield takeEvery(REDUCER_OPERATIONS.LOAD_AUTHENTICATE_TOKEN_REQUEST, asyncFunc),
+    yield takeEvery(REDUCER_OPERATIONS.LOAD_USER_REGISTER_REQUEST, asyncFunc),
+    yield takeEvery(REDUCER_OPERATIONS.LOAD_ALL_USERS_DETAILS_REQUEST, asyncFunc),
+    yield takeEvery(REDUCER_OPERATIONS.LOAD_ALL_BOOKS_DETAILS_REQUEST, asyncFunc),
+    yield takeEvery(REDUCER_OPERATIONS.LOAD_ADD_BOOK_REQUEST, asyncFunc),
+    yield takeEvery(REDUCER_OPERATIONS.LOAD_ADD_CATEGORY_REQUEST, asyncFunc)
+
   ])
 }
+
+export default function* rootSaga() {
+  yield Saga()
+  
+}
+
+// export default function* rootSaga() {
+
+//   yield all([
+//     authenticateSaga(),
+//     userRegisterSaga(),
+//     allBooksDetailsSaga(),
+//     allUsersDetailsSaga(),
+//     addBookSaga(),
+//     addCategorySaga()
+//   ])
+// }
