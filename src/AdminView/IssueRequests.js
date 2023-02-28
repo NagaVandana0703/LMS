@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
@@ -6,6 +6,8 @@ import { AButton,  TableHeader } from "./AVStyles";
 import { ToastContainerTag, ToastDiv } from "../Helpers/ToastStyles";
 import MainDataTable from "../Helpers/MainDataTable";
 import MainToast from "../Helpers/MainToast";
+import { useDispatch, useSelector } from "react-redux";
+import { loadAddResponseRequest, loadgetAllBookIssuesRequest } from "../reduxsaga/actions";
 
 
 
@@ -13,31 +15,30 @@ import MainToast from "../Helpers/MainToast";
 const IssueRequests = (props) => {
     const [toastFlag,setToastFlag]=useState(false);
     const [text,settext]=useState("");
+    const dispatch=useDispatch();
+    useEffect(()=>{
+        dispatch(loadgetAllBookIssuesRequest())
+    },[])
+    const D=useSelector(state=>state.AdminView)
+    const rowData=D.getallbookissues;
+    // const [rowData,setrowData]=useState(allissues)
     const Action = (e) => {
 
         const Aprove= () => {
             // setShowPopup(true)
             console.log(e.data)
-            settext("Successfully Deleted")
+            settext("Successfully Approved")
             setToastFlag(!toastFlag);
-            // toast(
-            //     <ToastDiv>
-            //       You have approved {e.data.bookName} book
-            //       &nbsp; &nbsp;
-            //       <TaskAltIcon style={{ color: "#00FF29" }} />
-            //     </ToastDiv>,
-            //     {
-            //       className: "toasterstyle",
-            //       autoClose: "1000",
-            //       hideProgressBar: true,
-            //     }
-            //   );
+            const id=e.data.issueId;
+            const resStatus=1
+           dispatch(loadAddResponseRequest(id,resStatus))
+           dispatch(loadgetAllBookIssuesRequest())
             const newData=[];
             for(let obj of rowData){
                 if(obj.authorName!==e.data.authorName)
                     newData.push(obj)
             }
-            setrowData(newData)
+            // setrowData(newData)
            
         }
         return (
@@ -48,17 +49,13 @@ const IssueRequests = (props) => {
         )
     }
     const columnDefs = useMemo(()=>[
-        { field: 'bookName', headerName:'Book Name',type: 'textCol' },
-        { field: 'authorName',headerName:'Author', type: 'textCol' },
-        { field: 'customername', headerName:'Customer Name', type: 'numCol' },
+        { field: 'bookDetails.bookName', headerName:'Book Name',type: 'textCol' },
+        { field: 'bookDetails.authorName',headerName:'Author', type: 'textCol' },
+        { field: 'user.username', headerName:'Customer Name', type: 'numCol' },
         { headerName: 'Actions', cellRenderer: Action, type: 'btnCol' }
 
     ],[])
-    const [rowData, setrowData] = useState([
-        { bookName: 'HarryPotter', authorName: 'Jyothi', customername:'Sanjay' },
-        { bookName: 'HalfGF', authorName: 'Chetan', customername:'Hari' },
-       
-    ])
+   
   
     
     return (

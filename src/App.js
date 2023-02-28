@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './reduxsaga/store';
 
 
+
 const CVLayout=lazy(()=>import('./CustomerView/CVLayout'));
 const AVlayout=lazy(()=>import('./AdminView/AVlayout'));
 const LoginPage=lazy(()=>import('./components/LoginPage'));
@@ -13,6 +14,7 @@ const IssueReqHistory=lazy(()=>import('./CustomerView/IssueReqHistory'));
 const IssuedBooks=lazy(()=>import('./CustomerView/IssuedBooks'));
 const OverDue=lazy(()=>import('./CustomerView/OverDue'));
 const Books=lazy(()=>import('./AdminView/Books'));
+const OverDues=lazy(()=>import('./AdminView/OverDues'));
 const IssueRequests=lazy(()=>import('./AdminView/IssueRequests'));
 const AddBooks=lazy(()=>import('./AdminView/AddBooks'));
 const ManageCustomers=lazy(()=>import('./AdminView/ManageCustomer'));
@@ -33,6 +35,7 @@ function App() {
             <Route exact path='/Books' element={<AVlayout element={Books} />}/>
             <Route path='/ManageCustomers' element={<AVlayout element={ManageCustomers}/>} />
             <Route path='/IssueRequests' element={<AVlayout element={IssueRequests}/>} />
+            <Route path='/Overdues' element={<AVlayout element={OverDues}/>} />
             <Route path='/AddBooks' element={<AVlayout element={AddBooks} />} />
             <Route path='/AddCategory' element={<AVlayout element={AddCategory}/>} />           
           </Routes>

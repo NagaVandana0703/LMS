@@ -1,19 +1,23 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { loadAllUsersDetailsRequest } from "../reduxsaga/actions";
+import { approveUserRegisterAction, loadAllUsersDetailsRequest } from "../reduxsaga/actions";
 import { AButton, TableHeader } from "./AVStyles";
 import MainDataTable from "../Helpers/MainDataTable";
-import { UseLoadAllUsersDetailsRequest } from "../reduxsaga/customHooks";
-import { REDUCER_OPERATIONS } from "../reduxsaga/StringConstants";
+
 
 
 const ManageCustomers = () => {
 
     let [hide, sethide] = useState(true)
 
-    const allusersdata = useSelector(state => state.AdminView.allusersdata,shallowEqual)
+    const allusersdata = useSelector(state => state.AdminView.allusersdata)
 //    const allusersdata = D.allusersdata
-   const [rowData,setrowData]=useState(allusersdata)
+const [rowData,setrowData]=useState([])
+for(let obj of allusersdata){
+    if(obj.role==='USER')
+        rowData.push(obj)
+}
+   
     console.log(allusersdata)
     
     const dispatch = useDispatch();
@@ -35,21 +39,23 @@ const ManageCustomers = () => {
         const [rowdata, setrowdata] = useState(props.data);
         
         const Aprove = () => {
-            let ob={};
-            ob.userid=props.data.userId;
-            ob.responseStatus=1
+        
+            const id=props.data.userId;
+            const resStatus=1;
              console.log(rowdata.userId,rowdata.responseStatus)
             setrowdata({...rowdata,responseStatus:'APPROVED'})
+            dispatch(approveUserRegisterAction(id,resStatus))
             console.log(rowdata)
           
             
         }
         const Reject=()=>{
-            let ob={};
-            ob.userid=props.data.userId;
-            ob.responseStatus=2
+        
+            const id=props.data.userId;
+            const resStatus=2
             setrowdata({...rowdata,responseStatus:'PENDING'})
-            dispatch()
+            dispatch(approveUserRegisterAction(id,resStatus))
+            
         }
         return (
             <>

@@ -1,14 +1,15 @@
 import {  ErrorMessage, Form, Formik } from "formik";
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
+import MainForm from "../Helpers/MainForm";
 import { loadAddBookRequest } from "../reduxsaga/actions";
 import { Button, FieldBox, FormContainer, FormHeader } from "./AVStyles";
 
 
 const AddBooks = () => {
     const dispatch=useDispatch();
-
-    const Validate=(values)=> {
+    const initialValues={ bookName: '', authorName: '', bookCategory: {category:'',minAge:'',maxAge:''}, quantity: '' };
+    const Validate=useCallback((values)=> {
         const errors = {};
 
         if (!values.bookName) {
@@ -28,6 +29,11 @@ const AddBooks = () => {
         } else if (isNaN(values.bookCategory.minAge)) {
           errors.bookCategory = {...errors.bookCategory, minAge: 'Must be a number'};
         }
+        if (!values.bookCategory.maxAge) {
+          errors.bookCategory = {...errors.bookCategory, maxAge: 'Required'};
+        } else if (isNaN(values.bookCategory.maxAge)) {
+          errors.bookCategory = {...errors.bookCategory, maxAge: 'Must be a number'};
+        }
       
         if (!values.quantity) {
           errors.quantity = 'Required';
@@ -35,8 +41,8 @@ const AddBooks = () => {
           errors.quantity = 'Must be a number';
         }
         return errors;
-    }
-    const HandleSubmit = (values,actions) => {
+    },[]);
+    const HandleSubmit = useCallback((values,actions) => {
         
         console.log(values)
         const errors=Validate(values)
@@ -45,33 +51,26 @@ const AddBooks = () => {
             actions.resetForm(); // reset the form values to empty
           }
         dispatch(loadAddBookRequest(values))        
-    }
+    },[]);
+    const ArrFields = [
+      { name: 'bookName', type: 'text', placeholder: 'Book Name' },
+      { name: 'authorName', type: 'text', placeholder: 'Author Name' },
+      { name: 'bookCategory.category', type: 'text', placeholder: 'Book CategoryEnter' },
+      { name: 'bookCategory.minAge', type: 'number', placeholder: 'Minimum Age' },
+      { name: 'bookCategory.maxAge', type: 'number', placeholder: 'Maximum Age' },
+      { name: 'quantity', type: 'number', placeholder: 'Quantity' }
+
+  ]
+  const subObj = { text: 'Add Book' }
     return (
         <>
             <FormContainer>
                 <FormHeader>
                     <h4>Add New Book</h4>
                 </FormHeader>                
-                    <Formik
-                        initialValues={{ bookName: '', authorName: '', bookCategory: {category:'',minAge:''}, quantity: '' }}
-                        validate={Validate}
-                        onSubmit={HandleSubmit}                                                
-                    >
-                        {({ isSubmitting }) => (
-                            <Form>                                
-                                    <FieldBox type='text'  name='bookName' placeholder='Book Name' /> 
-                                    <ErrorMessage name='bookName' />                              
-                                    <FieldBox type='text'  name='authorName' placeholder='AuthorName' />  
-                                    <ErrorMessage name='authorName' />                               
-                                    <FieldBox type='text'  name='bookCategory.category' placeholder='Book Category' /> 
-                                    <ErrorMessage name='bookCategory.category' />                                
-                                    <FieldBox type='number'  name='bookCategory.minAge' placeholder='Minimum Age' />
-                                    <ErrorMessage name='bookCategory.minAge' />                                   
-                                    <FieldBox type='number'  name='quantity' placeholder='Quantity' />                                                            
-                                    <Button type="submit" disabled={isSubmitting}>Add Book</Button>                               
-                            </Form>
-                        )}
-                    </Formik>              
+                    
+                    <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={ArrFields} subObj={subObj} />         
+            
             </FormContainer>
         </>
     )

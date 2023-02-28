@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "./RegisterForm";
 import { useDispatch } from "react-redux";
-import { ErrorMessage, Field, Formik, Form } from "formik";
-import { loadTokenRequest } from "../reduxsaga/actions";
-import { Btn, FieldBox1, FlexContainer, FlexContainerDiv } from "./Styles";
-import { AlterOption, Button, FieldBox } from "../AdminView/AVStyles";
+import { loadTokenRequest ,loadUserByNameRequest} from "../reduxsaga/actions";
+import {  FlexContainer, FlexContainerDiv } from "./Styles";
+import { AlterOption } from "../AdminView/AVStyles";
+import MainForm from "../Helpers/MainForm";
 
 const Loginform = ({ path, dispatch, navigate }) => {
+    const initialValues={ username: '', password: '' };
     const Validate=(values)=>{
         const errors = {};
                     for (let key in values) {
@@ -18,29 +19,19 @@ const Loginform = ({ path, dispatch, navigate }) => {
     }
     const HandleSubmit=(values)=>{
      console.log(values);
+     localStorage.setItem('name',values.username)
                     dispatch(loadTokenRequest(values))
+                    dispatch(loadUserByNameRequest(values.username))
                     navigate(`${path}`)   
     }
+    const ArrFields=[
+        {className:'LRforminput',type:'text',name:'username',placeholder:'UserName'},
+        {className:'LRforminput',type:'password',name:'password',placeholder:'Password'},
+    ]
+    const subObj={className:'LRformsubmit',text:'Login'}
     return (
         <>
-            <Formik
-                initialValues={{ username: '', password: '' }}
-                validate={Validate}
-                onSubmit={HandleSubmit}
-            >
-                {() => (
-                    <Form >
-                        {/* <FieldBox1> */}
-                            <FieldBox className='LRforminput' id='username' type='text' name='username' placeholder='UserName' />
-                            <ErrorMessage name="username" />
-                      
-                            <FieldBox className='LRforminput' id='password' type='password' name='password' placeholder='Password' />
-                            <ErrorMessage name="password" />
-                    
-                        <Button  className="LRformsubmit" type="submit">Login</Button>
-                    </Form>
-                )}
-            </Formik>
+            <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={ArrFields} subObj={subObj} />
         </>
     )
 }
@@ -50,6 +41,7 @@ const LoginPage = () => {
     const [flag, setFlag] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     const token = localStorage.getItem('authtoken')
     return (
         <div>

@@ -84,7 +84,7 @@ color:red;
 margin-left:12px
 `
 export const LabelDate=styled.label`
-margin-left:-50px
+margin-left:-40px
 
 `
 //DataTable styling
@@ -97,7 +97,7 @@ text-align: center;
 
    
 `
-export const DataTable = styled.div`
+export const DataTableDiv = styled.div`
   position: fixed;
   top: 30%;
   left: 20%;

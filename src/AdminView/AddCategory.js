@@ -1,51 +1,45 @@
-import { ErrorMessage, Form, Formik } from "formik";
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
+import MainForm from "../Helpers/MainForm";
 import { loadAddCategoryRequest } from "../reduxsaga/actions";
-import { Button, FieldBox, FormContainer, FormHeader } from "./AVStyles";
+import { FormContainer, FormHeader } from "./AVStyles";
 
 const AddCategory = () => {
     const dispatch = useDispatch();
-    const Validate=(values)=>{
+    const initialValues = { category: '', minAge: '', maxAge: '' };
+    const Validate = useCallback((values) => {
         const errors = {};
-        for(let key in values){
-            if(!values[key])
-                errors[key]='Required'
+        for (let key in values) {
+            if (!values[key])
+                errors[key] = 'Required'
         }
         return errors;
-    }
-    const HandleSubmit = (values,actions) => {
-        const errors=Validate(values) 
+    }, []);
+    const HandleSubmit = useCallback((values, actions) => {
+        console.log(values)
+        dispatch(loadAddCategoryRequest(values))
+        const errors = Validate(values)
         if (!Object.keys(errors).length) {
             actions.resetForm(); // reset the form values to empty
-          }
-        values.categoryId = 0;
-        dispatch(loadAddCategoryRequest(values))
-    }
+        }
+       
+    }, []);
+    const ArrFields = [
+        { name: 'category', type: 'text', placeholder: 'Category Name' },
+        { name: 'minAge', type: 'number', placeholder: 'Enter Min Age' },
+        { name: 'maxAge', type: 'number', placeholder: 'Enter Max Age' }
+    ]
+    const subObj = { text: 'Add Category' }
     return (
         <>
-            <FormContainer>
-                <FormHeader>
-                    <h4>Add New Category</h4>
-                </FormHeader>
-                <Formik
-                    initialValues={{ category: '', minAge: '', maxAge: '' }}
-                    validate={Validate}
-                    onSubmit={HandleSubmit}
-                >
-                    {({isSubmitting}) => (
-                        <Form>
-                            <FieldBox type='text'  name='category' placeholder='Category Name' />
-                            <ErrorMessage name='category' />
-                            <FieldBox type='number'  name='minAge' placeholder='Enter Min Age' />
-                            <ErrorMessage name='minAge' />
-                            <FieldBox type='number'  name='maxAge' placeholder='Enter Max Age' />
-                            <ErrorMessage name='maxAge' />
-                            <Button type="submit" disabled={isSubmitting}>Add Category</Button>
-                        </Form>
-                    )}
-                </Formik>
-            </FormContainer>
+        
+        <FormContainer>
+            <FormHeader>
+                <h4>Add New Category</h4>
+            </FormHeader>
+            <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={ArrFields} subObj={subObj} />
+
+        </FormContainer>
         </>
     )
 }

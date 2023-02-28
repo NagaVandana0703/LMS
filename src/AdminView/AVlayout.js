@@ -1,78 +1,11 @@
-import React, { useState } from "react";
-
-import { BiHome } from "react-icons/bi";
-import { AiOutlineSchedule } from "react-icons/ai";
-import { TbBoxMultiple } from "react-icons/tb";
-import { VscFeedback } from "react-icons/vsc";
-import Header from "../layout/Header";
+import React, { useMemo } from "react";
 import MainLayout from "../layout/MainLayout";
+import { AVMenuItems } from "../reduxsaga/jsondata";
+
 function AVlayout({ element }) {
-
-  const menuItems = [
-    {
-      text: "Books",
-      icon: (
-        <BiHome
-          size="1.6em"
-         
-        />
-      ),
-      link: "/Books",
-      index: "1",
-    },
-    {
-      text: "ManageCustomers",
-      icon: (
-        <AiOutlineSchedule
-          size="1.6em"
-         
-        />
-      ),
-      link: "/ManageCustomers",
-      index: "2",
-    },
-    {
-      text: "IssueRequests",
-      icon: (
-        <TbBoxMultiple
-          size="1.6em"
-         
-        />
-      ),
-      link: "/IssueRequests",
-      index: "3",
-    },
-    {
-      text: "AddBooks",
-      icon: (
-        <VscFeedback
-          size="1.6em"
-         
-        />
-      ),
-      link: "/AddBooks",
-      index: "4",
-    },
-    {
-      text: "AddCategory",
-      icon: (
-        <VscFeedback
-          size="1.6em"
-         
-        />
-      ),
-      link: "/AddCategory",
-      index: "5",
-    }
-  ];
-
-
+  const menuItems = useMemo(() => AVMenuItems, []);
   return (
-    <div>
-      <Header menuItems={menuItems} />
-      
-      <MainLayout Component={element} menuItems={menuItems} />
-    </div>
+    <MainLayout Component={element} menuItems={menuItems} />
   );
 }
 export default AVlayout;

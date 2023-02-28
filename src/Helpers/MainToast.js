@@ -7,9 +7,8 @@ import { ToastDiv } from "./ToastStyles";
 function MainToast({text,setToastFlag}){
     const Toast=()=>{toast(
         <ToastDiv>
-          {text} &nbsp;
-          &nbsp;
-          <TaskAltIcon style={{ color: "#00FF29" }} />
+          {text} 
+          <TaskAltIcon />
         </ToastDiv>,
         {
           className: "toasterstyle",
@@ -19,7 +18,7 @@ function MainToast({text,setToastFlag}){
       );
     setToastFlag(false)
     }
-    console.log('11')
+    
     return(
        
         

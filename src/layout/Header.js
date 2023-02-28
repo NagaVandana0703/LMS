@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { BiBookOpen } from "react-icons/bi";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { loadUserByNameRequest } from "../reduxsaga/actions";
 import {  DropdownItemLogout, DropdownToggleBasic, Header1, HeaderBlock, HeaderTitleNew,  RightIcons, Text, UserDesignation, UserDesignationInnova, UserDetails, UserImageInnova, UserNameInnova } from "./LayoutStyles";
 
 function Header() {
@@ -11,8 +13,9 @@ function Header() {
     navigate('/')
 
   };
-  //  let user_details =JSON.parse(localStorage.getItem('userDetails'))
-  let user_details = { displayName: 'Vandana', role: 'Admin' };
+ 
+   let user_details =JSON.parse(localStorage.getItem('user_details'))
+  console.log(user_details)
   const user={
     image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ13E7APiRYnJMkfaiVP5TFDrZSXolAQc0QhQ&usqp=CAU"
 }
@@ -26,7 +29,7 @@ function Header() {
         <RightIcons>
           <UserDesignation>
             <UserDetails>
-              <UserNameInnova>{user_details.displayName}</UserNameInnova>
+              <UserNameInnova>{user_details.username}</UserNameInnova>
               <UserDesignationInnova>{user_details.role}</UserDesignationInnova>
             </UserDetails>
             <Dropdown>

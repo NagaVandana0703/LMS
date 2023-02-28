@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { AgGridReact } from 'ag-grid-react';
-import { DataTable } from "../AdminView/AVStyles";
+import { DataTableDiv } from "../AdminView/AVStyles";
 
 const MainDataTable = ({columnDefs,rowData,defaultColDef,columnTypes}) => {
 
     return (
         <>
-            <DataTable className="ag-theme-alpine">
+            <DataTableDiv className="ag-theme-alpine">
                 <AgGridReact
                     columnDefs={columnDefs}
                     rowData={rowData}
@@ -17,7 +17,7 @@ const MainDataTable = ({columnDefs,rowData,defaultColDef,columnTypes}) => {
                 >
                 </AgGridReact>
 
-            </DataTable>
+            </DataTableDiv>
         </>
     )
 

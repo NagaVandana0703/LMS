@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
 import PopupForm from "./PopupForm";
@@ -6,22 +6,42 @@ import { AButton, TableHeader } from "../AdminView/AVStyles";
 import { Field, Form, Formik } from "formik";
 import { FormC } from "./CVStyles";
 import MainDataTable from "../Helpers/MainDataTable";
+import { useDispatch, useSelector } from "react-redux";
+import { loadAllBooksRequest, loadissueBookRequest } from "../reduxsaga/actions";
+import { ToastContainerTag } from "../Helpers/ToastStyles";
+import MainToast from "../Helpers/MainToast";
 
 
 
 const AllBooks = () => {
+    const [toastFlag, setToastFlag] = useState(false);
+    const [text, settext] = useState("");
     const [showPopup, setShowPopup] = useState(false);
     const handleClose = () => setShowPopup(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const setModal = () => {
         setModalIsOpen(true);
     };
+    const dispatch=useDispatch();
+    const loadAllBooksDetails=useCallback(()=>{
+        dispatch(loadAllBooksRequest());
 
+    },[])
+    useEffect(()=>{
+        loadAllBooksDetails()
+    
+    },[])
+    const rowData = useSelector(state => state.AdminView.allbooksdetailsdata)
+
+    const userdetails=JSON.parse(localStorage.getItem('user_details'))
     const IssueBodyAction = (e) => {
 
         const Issue = () => {
-            setShowPopup(true)
-            console.log(e.data)
+            // setShowPopup(true)
+            console.log(e.data.bookId,userdetails.userId)
+            dispatch(loadissueBookRequest(e.data.bookId,userdetails.userId))
+            settext("Issued the book successfully");
+            setToastFlag(!toastFlag)
 
         }
         return (
@@ -31,30 +51,13 @@ const AllBooks = () => {
         )
     }
     const [columnDefs, setcolumnDefs] = useState([
-        { field: 'serialno', type: 'numCol' },
-        { field: 'title', type: 'textCol' },
-        { field: 'author', type: 'textCol' },
+        { field: 'bookName', type: 'textCol' },
+        { field: 'authorName', type: 'textCol' },
         { field: 'quantity', type: 'numCol' },
         { headerName: 'Actions', cellRenderer: IssueBodyAction, type: 'btnCol' }
 
     ])
-    const [Data, setData] = useState([
-        { serialno: '1', title: 'HarryPotter', author: 'Jyothi', quantity: 5 },
-        { serialno: '2', title: 'HalfGF', author: 'Chetan', quantity: 3 },
-        { serialno: '3', title: 'RichDad', author: 'Robert', quantity: 15 },
-        { serialno: '4', title: 'Alchemist', author: 'Geetha', quantity: 7 },
-        { serialno: '5', title: 'thinkMonk', author: 'Shetty', quantity: 8 },
-        { serialno: '6', title: 'Mind', author: 'Vandana', quantity: 9 },
-        { serialno: '7', title: 'BhagavatGeetha', author: 'Krishna', quantity: 10 },
-        { serialno: '8', title: 'Doremon', author: 'MrCat', quantity: 25 },
-        { serialno: '9', title: 'Sinchan', author: 'Joe', quantity: 5 },
-    ])
-    const arr = [
-        { serialno: '4', title: 'Alchemist', author: 'Geetha', quantity: 7 },
-        { serialno: '5', title: 'thinkMonk', author: 'Shetty', quantity: 8 },
-        { serialno: '6', title: 'Mind', author: 'Vandana', quantity: 9 },
-        { serialno: '7', title: 'BhagavatGeetha', author: 'Krishna', quantity: 10 },
-    ]
+   
 
     const Validate = (values) => {
         const errors = {};
@@ -88,7 +91,11 @@ const AllBooks = () => {
                     )}
                 </Formik>
             </FormC>
-            <MainDataTable columnDefs={columnDefs} rowData={Data} defaultColDef={{ flex: 1 }} />
+            <MainDataTable columnDefs={columnDefs} rowData={rowData} defaultColDef={{ flex: 1 }} />
+            <ToastContainerTag
+                toastStyle={{ backgroundColor: "#00397A", color: "white" }}
+            />
+            {toastFlag ? <MainToast text={text} setToastFlag={setToastFlag} /> : ""}
             <>
                 <Modal
                     dialogClassName="modalpopup"

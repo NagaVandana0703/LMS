@@ -5,12 +5,13 @@ import { useDispatch } from 'react-redux';
 import { loadUserRegisterRequest } from '../reduxsaga/actions';
 import { Btn, FieldBox1 } from './Styles';
 import { AlterOption, Button, ErrorMessageDiv, FieldBox, LabelDate } from '../AdminView/AVStyles';
+import MainForm from '../Helpers/MainForm';
 
 const RegisterForm = ({ setFlag }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const initialValues = { username: '', password: '', phoneNumber: '', emailId: '', sex: '', hometown: '', dob: '' };
-    const validate = useCallback((values) => {
+    const Validate = useCallback((values) => {
    
         const errors = {};
         for (let key in values) {
@@ -20,61 +21,35 @@ const RegisterForm = ({ setFlag }) => {
 
         return errors;
     },[])
-    const HandleSubmit = (e, values) => {
+    const HandleSubmit = ( values) => {
         console.log(values);
         const errors = {};
-        console.log(e);
-        const phoneNumLength = String(e.phonenumber)
-        if (phoneNumLength.length > 10) {
-            console.log(phoneNumLength.length)
-            errors.phonenum = 'Minimum length 10';
-        }
+        // console.log(e);
+        // const phoneNumLength = String(e.phonenumber)
+        // if (phoneNumLength.length > 10) {
+        //     console.log(phoneNumLength.length)
+        //     errors.phonenum = 'Minimum length 10';
+        // }
         dispatch(loadUserRegisterRequest(values))
         // e.preventDefault()
         navigate('/AllBooks')
 
     }
-
+    const ArrFields=[
+        {className:'LRforminput',type:'text',name:'username',placeholder:'UserName'},
+        {className:'LRforminput',type:'password',name:'password',placeholder:'Password'},
+        {className:'LRforminput',type:'number',name:'phoneNumber',placeholder:'PhoneNumber'},
+        {className:'LRforminput',type:'email',name:'emailId',placeholder:'EmailId'},
+        {className:'LRforminput',type:'text',name:'sex',placeholder:'Gender'},
+        {className:'LRforminput',type:'text',name:'hometown',placeholder:'Address'},
+        {className:'LRforminput',type:'date',name:'dob',placeholder:'Date Of birth'},
+    ]
+    const subObj={className:'LRformsubmitR',text:'Register'}
     return (
         <div>
-            <Formik
-                initialValues={initialValues}
-                validate={(values) => validate(values)}
-                onSubmit={(values) => HandleSubmit(values)}
-            >
-                {() => (
-                    <Form >
-                            
-                            <FieldBox className='LRforminput' id='username' type='text' name='username' placeholder='UserName' />
-                            <ErrorMessageDiv name='username' component='span'/>
-                     
-                            <FieldBox className='LRforminput' id='password' type='password' name='password' placeholder='Password' />
-                            <ErrorMessage name='password' />
-                
-
-                            <FieldBox className='LRforminput' id='phonenumber' type='number' name='phoneNumber' placeholder='PhoneNumber' />
-                            <ErrorMessage name='phonenumber' />
-                     
-
-                            <FieldBox className='LRforminput' id='emailid' type='email' name='emailId' placeholder='EmailId' />
-                            <ErrorMessage name='emailid' />
-                  
-
-                            <FieldBox className='LRforminput' id='gender' type='gender' name='sex' placeholder='Gender' />
-                            <ErrorMessage name='gender' />
-                      
-
-                            <FieldBox className='LRforminput' id='address' type='text' name='hometown' placeholder='Address' />
-                            <ErrorMessage name='address' />
-                            <div>
-                            <LabelDate>DOB : &nbsp;</LabelDate>
-                            <FieldBox className='LRforminput'  type='date' name='dob' />
-                            <ErrorMessage name='dob' />
-                            </div>
-                        <Button type='submit' className="LRformsubmitR">Register</Button><span><AlterOption onClick={() => setFlag(false)} >Login</AlterOption></span>
-                    </Form>
-                )}
-            </Formik>
+        
+            <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={ArrFields} subObj={subObj} /><span> <AlterOption onClick={() => setFlag(false)} >Login</AlterOption></span>
+           
         </div>
     )
 }

@@ -1,25 +1,21 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AButton, TableHeader } from "../AdminView/AVStyles";
+import { TableHeader ,  AButton } from "../AdminView/AVStyles";
 import MainDataTable from "../Helpers/MainDataTable";
-import { loadgetApprovedBooksRequest, loadreturnBookRequest } from "../reduxsaga/actions";
+import { loadgetOverDueRequest, loadreturnBookRequest } from "../reduxsaga/actions";
 
 
-const IssuedBooks = () => {
+// import './Table.css';
+const OverDues = () => {
+
     const userdetails=JSON.parse(localStorage.getItem('user_details'))
     const dispatch=useDispatch();
     useEffect(()=>{
-        dispatch(loadgetApprovedBooksRequest())
+        dispatch(loadgetOverDueRequest())
     },[]);
     const D=useSelector(state=>state.AdminView)
-    const Data=D.getapprovedbooks;
-    let [rowData,setrowData]=useState([])
-    const arr=[]
-    for(let obj of Data){
-        if(obj.user.userId===userdetails.userId && obj.returnedDate===null)
-          arr.push(obj)
-      }
-      rowData=arr;
+    const Data=D.getoverduebooks;
+    let [rowData,setrowData]=useState(Data)
     const ReturnAction = (e) => {
         const Return=()=>{
             // console.log(e.data.issueId)
@@ -32,9 +28,8 @@ const IssuedBooks = () => {
             </>
         )
     }
-
     
-    const columnDefs = useMemo(()=>[
+    const columnDefs =useMemo(()=>[
         { field: 'bookDetails.bookName',headerName:'Book' },
         { field: 'bookDetails.authorName',headerName:'Author' },
         {field:'bookDetails.bookCategory.category',headerName:'Category'},
@@ -46,11 +41,11 @@ const IssuedBooks = () => {
     return (
         <>
             <>
-                <TableHeader>My Issued Books</TableHeader>
-                <MainDataTable  columnDefs={columnDefs} rowData={rowData} defaultColDef={{ flex: 1 }} />
+                <TableHeader>OverDue</TableHeader>
+                <MainDataTable columnDefs={columnDefs} rowData={rowData.length?rowData:Data} defaultColDef={{ flex: 1 }}/>
             </>
         </>
     )
 }
 
-export default IssuedBooks;
+export default OverDues;

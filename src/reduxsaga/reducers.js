@@ -13,6 +13,10 @@ const initialState={
     allusersdata:[],
     addbookdata:[],
     addcategorydata:[],
+
+    getallbookissues:[],
+    getapprovedbooks:[],
+    getoverduebooks:[]
   
 };
 export function AVReducer(state = initialState, action) {
@@ -28,6 +32,7 @@ export function AVReducer(state = initialState, action) {
         }
 
         case REDUCER_OPERATIONS.LOAD_AUTHENTICATE_TOKEN_SUCCESS: {
+            localStorage.setItem('authtoken',action.data.token)
             return {
                 ...state,
                 tokendata: action.data,
@@ -42,9 +47,11 @@ export function AVReducer(state = initialState, action) {
             }
         }
         case REDUCER_OPERATIONS.LOAD_USER_BY_NAME_SUCCESS: {
+            console.log(action.data[0])
+            localStorage.setItem('user_details',JSON.stringify(action.data[0]))
             return {
                 ...state,
-                userdata: action.data,
+                userdata: action.data[0],
                 loading: false
             }
         }
@@ -81,6 +88,34 @@ export function AVReducer(state = initialState, action) {
         }
 
 
+        case REDUCER_OPERATIONS.LOAD_GET_ALLBOOK_ISSUES_SUCCESS: {
+            const newarr=[];
+            for(let obj of action.data){
+                if(obj.responseStatus!=='APPROVED')
+                    newarr.push(obj)
+            }
+            
+            return {
+                ...state,
+                getallbookissues: newarr,
+                loading: false
+            }
+        }
+        case REDUCER_OPERATIONS.LOAD_GET_APPROVEDBOOKS_SUCCESS: {
+            return {
+                ...state,
+                getapprovedbooks: action.data,
+                loading: false
+            }
+        }
+        case REDUCER_OPERATIONS.LOAD_GET_OVERDUE_SUCCESS: {
+            
+            return {
+                ...state,
+                getoverduebooks: action.data,
+                loading: false
+            }
+        }
         case REDUCER_OPERATIONS.LOAD_USERS_ERROR: {
             return {
                 ...state,

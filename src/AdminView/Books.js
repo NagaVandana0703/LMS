@@ -18,35 +18,45 @@ const Books = () => {
     console.log(token)
     // const D=useSelector(state=>state.AdminView)
     const dispatch = useDispatch();
-    
-      useEffect(()=>{
-
-    //     //    loadAllBooksDetails()
-    dispatch(loadAllBooksRequest());
+    const allbooksdata = useSelector(state => state.AdminView.allbooksdetailsdata, shallowEqual)
+    // let mydata=allbooksdata
+    const loadAllBooksDetails=useCallback(()=>{
+        dispatch(loadAllBooksRequest());
 
     },[])
-   //  dispatch(loadAllBooksRequest());
-    const allbooksdata = useSelector(state => state.AdminView.allbooksdetailsdata, shallowEqual)
+    useEffect(()=>{
+        loadAllBooksDetails()
+    
+    },[])
+     //dispatch(loadAllBooksRequest());
 
     // var allbooksdata=D.allbooksdetailsdata
     
     const [rowData, setrowData] = useState(allbooksdata)
      console.log(allbooksdata)
     console.log(rowData)
+    
 
     const Action = (e) => {
    
         const Delete = () => {
-           
+            console.log(e.data)
             console.log(allbooksdata)
-            var newArr = allbooksdata.filter((obj) => obj.authorName != e.data.authorName);
+            console.log(rowData)
+            if(rowData.length===0)
+                var newArr = allbooksdata.filter((obj) => obj.authorName != e.data.authorName);
+            else
+                var newArr = rowData.filter((obj) => obj.authorName != e.data.authorName);
             setrowData(newArr);
-
+            settext("hi");
+            setToastFlag(!toastFlag)
 
         }
+       
         return (
+
             <>
-                <AButton onClick={() => { Delete(allbooksdata) }} >Delete</AButton>
+                <AButton onClick={Delete}>Delete</AButton>
             </>
         )
     }
@@ -56,7 +66,7 @@ const Books = () => {
         { field: 'authorName', headerName: 'Author Name' },
         { field: 'quantity', headerName: 'Quantity' },
         { field: 'bookCategory.category', headerName: 'Category' },
-        { headerName: 'Actions', cellRenderer: Action }
+        { headerName: 'Actions', cellRenderer: Action, }
 
     ], [])
 

@@ -1,9 +1,10 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Button, FieldBox, LabelDate } from "../AdminView/AVStyles";
 
 
 
-const MainForm = ({ initialValues, HandleSubmit,Validate,ArrFields }) => {
+const MainForm = ({ initialValues, HandleSubmit,Validate,ArrFields,subObj }) => {
   return (
     <Formik
       initialValues={initialValues}
@@ -13,17 +14,23 @@ const MainForm = ({ initialValues, HandleSubmit,Validate,ArrFields }) => {
       {(formik) => (
         <Form>
           {ArrFields.map((field) => (
-            <div key={field.name}>
-              <label htmlFor={field.name}>{field.label}</label>
+            
+            <>
+            {field.type==='date'?<div>
+
+             <LabelDate>DOB:</LabelDate>
               
-                <Field type={field.type} name={field.name} />
+                <FieldBox className={field.className?field.className:''} type={field.type} name={field.name} />
+                <ErrorMessage name={field.name}/>
+              </div>:
+              <>
+                <FieldBox className={field.className?field.className:''} type={field.type} name={field.name} placeholder={field.placeholder} />
+                <ErrorMessage name={field.name}/>
+              </>}
               
-              {formik.touched[field.name] && formik.errors[field.name] ? (
-                <div className="error">{formik.errors[field.name]}</div>
-              ) : null}
-            </div>
+            </>
           ))}
-          <button type="submit">Submit</button>
+          <Button className={subObj.className?subObj.className:'' } type="submit">{subObj.text}</Button>
         </Form>
       )}
     </Formik>
