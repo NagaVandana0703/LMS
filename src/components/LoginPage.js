@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "./RegisterForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loadTokenRequest ,loadUserByNameRequest} from "../reduxsaga/actions";
 import {  FlexContainer, FlexContainerDiv } from "./Styles";
 import { AlterOption } from "../AdminView/AVStyles";
 import MainForm from "../Helpers/MainForm";
 
-const Loginform = ({ path, dispatch, navigate }) => {
+const pageResponse =()=> {
+   
+}
+
+const Loginform = ({ path, dispatch, navigate ,f }) => {
     const initialValues={ username: '', password: '' };
     const Validate=(values)=>{
         const errors = {};
@@ -17,12 +21,18 @@ const Loginform = ({ path, dispatch, navigate }) => {
                     }
                     return errors;
     }
-    const HandleSubmit=(values)=>{
+
+    
+    const HandleSubmit=(values )=>{
      console.log(values);
      localStorage.setItem('name',values.username)
+     dispatch(loadUserByNameRequest(values.username))
+
                     dispatch(loadTokenRequest(values))
-                    dispatch(loadUserByNameRequest(values.username))
-                    navigate(`${path}`)   
+                  
+                        navigate(`${path}`) 
+                    
+                     
     }
     const ArrFields=[
         {className:'LRforminput',type:'text',name:'username',placeholder:'UserName'},
@@ -36,24 +46,29 @@ const Loginform = ({ path, dispatch, navigate }) => {
     )
 }
 
-const LoginPage = () => {
+const LoginPage = (pageResponse) => {
 
     const [flag, setFlag] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
     const token = localStorage.getItem('authtoken')
+    const d=useSelector(state=>state.AdminView)
+    console.log(d.tokendata)
     return (
         <div>
             <FlexContainer>
                 <FlexContainerDiv>
                     <h4>Admin Login</h4>
-                    <Loginform path='/Books' dispatch={dispatch} navigate={navigate} />
+                    {flag ? <RegisterForm setFlag={setFlag} role='admin'/> : <>
+                        <Loginform path='/AddBooks' dispatch={dispatch} navigate={navigate} f={d.tokendata}/>
+                    </>}
+                    {flag ? '' : <p>New Admin?<AlterOption onClick={() => setFlag(true)} >Register</AlterOption></p>}
                 </FlexContainerDiv>
                 <FlexContainerDiv>
                     <h4>Customer Login</h4>
-                    {flag ? <RegisterForm setFlag={setFlag} /> : <>
-                        <Loginform path='/AllBooks' dispatch={dispatch} navigate={navigate} />
+                    {flag ? <RegisterForm setFlag={setFlag} role='user'/> : <>
+                        <Loginform path='/AllBooks' dispatch={dispatch} navigate={navigate} f={d.tokendata}/>
                     </>}
                     {flag ? '' : <p>New User?<AlterOption onClick={() => setFlag(true)} >Register</AlterOption></p>}
                 </FlexContainerDiv>

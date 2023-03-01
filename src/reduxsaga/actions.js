@@ -22,6 +22,15 @@ export const loadTokenRequest=(obj)=>{
 
     }
 }
+export const loadAdminRegisterRequest=(obj)=>{  
+    return{
+        type:REDUCER_OPERATIONS.LOAD_ADMIN_REGISTER_REQUEST,
+        payload:obj,
+        link:'adminRequest',
+        success:REDUCER_OPERATIONS.LOAD_ADMIN_REGISTER_SUCCESS
+
+    }
+}
 
 export const approveUserRegisterAction=(id,status)=>{
     return{
@@ -143,5 +152,42 @@ export const loadgetOverDueRequest=()=>{
         success:REDUCER_OPERATIONS.LOAD_GET_OVERDUE_SUCCESS,
       
 
+    }
+}
+
+export const loadgetCategoryRequest=()=>{
+  
+    return{
+        type:REDUCER_OPERATIONS.LOAD_CATEGORY_REQUEST,
+        link:'category',
+        success:REDUCER_OPERATIONS.LOAD_CATEGORY_SUCCESS,
+    
+    }
+}
+export const loaddeleteCategoryRequest=(id)=>{
+  
+    return{
+        type:REDUCER_OPERATIONS.LOAD_DELETE_CATEGORY_REQUEST,
+        link:`deleteCategory/${id}`,
+        success:REDUCER_OPERATIONS.LOAD_DELETE_CATEGORY_SUCCESS,
+    
+    }
+}
+export const loaddeleteBookRequest=(id)=>{
+  
+    return{
+        type:REDUCER_OPERATIONS.LOAD_DELETE_BOOK_REQUEST,
+        link:`deleteBook/${id}`,
+        success:REDUCER_OPERATIONS.LOAD_DELETE_BOOK_SUCCESS,
+    
+    }
+}
+export const loadCategoryAgeRequest=(category,minAge)=>{
+  
+    return{
+        type:REDUCER_OPERATIONS.LOAD_CATEGORYAGE_REQUEST,
+        link:`searchBooksByCategory&Age/?category=${category}&minAge=${minAge}`,
+        success:REDUCER_OPERATIONS.LOAD_CATEGORYAGE_SUCCESS,
+    
     }
 }

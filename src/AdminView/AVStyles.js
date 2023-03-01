@@ -8,21 +8,19 @@ export const FormContainer = styled.div`
 position: relative;
 top:20%;
 left: 15%;
-border: 2px solid #eee;
-width: 55%;
-height: 400px;
+height: 450px;
 &.popup{
     border:none;
 }
 
 
 `
-export const FormHeader=styled.div`
-text-align: center;
+export const FormHeader = styled.div`
+// text-align: center;
     margin: 30px;
 `
-export const FieldBox=styled(Field)`
-width: 600px;
+export const FieldBox = styled(Field)`
+width: 300px;
     margin: 5px;
     position: relative;
     left:5%;
@@ -36,16 +34,21 @@ width: 600px;
 width: 50%;
   }
 `
-export const Button=styled.button`
+export const Button = styled.button`
 position: relative;
 left:5%;
-margin-top: 20px;
-width: 610px;
+margin-top: 40px;
+width: 310px;
 background-color: #134ee3;
 color: white;
 border: 1px solid #134ee3;
 padding: 5px;
 cursor:pointer;
+&.addBtn{
+  margin-top: 60px;
+  margin-left:900px;
+  width:150px;
+}
 &.popupsubmit{
     width:100%
 }
@@ -53,12 +56,12 @@ cursor:pointer;
     width:50%
 }
 &.LRformsubmitR{
-  width:30%
-  //margin-left:30px
+  width:52%;
+  margin-top:10px
 }
 
 `
-export const AButton=styled.button`
+export const AButton = styled.button`
 height: 30px;
     border: none;
     background-color: green;
@@ -72,24 +75,24 @@ height: 30px;
         margin-left:20px
     }
 `
-export const AlterOption=styled.a`
+export const AlterOption = styled.a`
 
 cursor:pointer;
 color:blue;
 margin-left:30px
 // margin-right:-30px
 `
-export const ErrorMessageDiv=styled(ErrorMessage)`
+export const ErrorMessageDiv = styled(ErrorMessage)`
 color:red;
 margin-left:12px
 `
-export const LabelDate=styled.label`
+export const LabelDate = styled.label`
 margin-left:-40px
 
 `
 //DataTable styling
 
-export const TableHeader=styled.h3`
+export const TableHeader = styled.h3`
 text-align: center;
     padding: 20px;
     position:fixed;
@@ -110,7 +113,7 @@ export const DataTableDiv = styled.div`
   }
 
 `
-export const StyledAgGridReact=styled(AgGridReact)`
+export const StyledAgGridReact = styled(AgGridReact)`
 .ag-theme-alpine.ag-header{
     color:red
 }

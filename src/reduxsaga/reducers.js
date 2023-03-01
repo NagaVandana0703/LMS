@@ -13,10 +13,11 @@ const initialState={
     allusersdata:[],
     addbookdata:[],
     addcategorydata:[],
-
+    category:[],
     getallbookissues:[],
     getapprovedbooks:[],
-    getoverduebooks:[]
+    getoverduebooks:[],
+    getcategoryagebooks:[],
   
 };
 export function AVReducer(state = initialState, action) {
@@ -89,6 +90,7 @@ export function AVReducer(state = initialState, action) {
 
 
         case REDUCER_OPERATIONS.LOAD_GET_ALLBOOK_ISSUES_SUCCESS: {
+    
             const newarr=[];
             for(let obj of action.data){
                 if(obj.responseStatus!=='APPROVED')
@@ -113,6 +115,22 @@ export function AVReducer(state = initialState, action) {
             return {
                 ...state,
                 getoverduebooks: action.data,
+                loading: false
+            }
+        }
+        case REDUCER_OPERATIONS.LOAD_CATEGORY_SUCCESS: {
+            
+            return {
+                ...state,
+                category: action.data,
+                loading: false
+            }
+        }
+        case REDUCER_OPERATIONS.LOAD_CATEGORYAGE_SUCCESS: {
+            
+            return {
+                ...state,
+                getcategoryagebooks: action.data,
                 loading: false
             }
         }

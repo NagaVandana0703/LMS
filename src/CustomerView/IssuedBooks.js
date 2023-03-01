@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AButton, TableHeader } from "../AdminView/AVStyles";
 import MainDataTable from "../Helpers/MainDataTable";
@@ -6,49 +6,40 @@ import { loadgetApprovedBooksRequest, loadreturnBookRequest } from "../reduxsaga
 
 
 const IssuedBooks = () => {
-    const userdetails=JSON.parse(localStorage.getItem('user_details'))
-    const dispatch=useDispatch();
-    useEffect(()=>{
+    const userdetails = JSON.parse(localStorage.getItem('user_details'))
+    const dispatch = useDispatch();
+    useEffect(() => {
         dispatch(loadgetApprovedBooksRequest())
-    },[]);
-    const D=useSelector(state=>state.AdminView)
-    const Data=D.getapprovedbooks;
-    let [rowData,setrowData]=useState([])
-    const arr=[]
-    for(let obj of Data){
-        if(obj.user.userId===userdetails.userId && obj.returnedDate===null)
-          arr.push(obj)
-      }
-      rowData=arr;
-    const ReturnAction = (e) => {
-        const Return=()=>{
-            // console.log(e.data.issueId)
-            const id=e.data.issueId;
-            dispatch(loadreturnBookRequest(id))
+    }, []);
+    const storeData = useSelector(state => state.AdminView)
+    const { getapprovedbooks } = storeData;
+    const rowData = [];
+    for (let obj of getapprovedbooks) {
+        if (obj.user.userId === userdetails.userId && obj.returnedDate === null)
+            rowData.push(obj)
+    }
+    const Action = (e) => {
+        const Return = () => {
+            dispatch(loadreturnBookRequest(e.data.issueId))
+            dispatch(loadgetApprovedBooksRequest())
         }
         return (
-            <>
-                <AButton onClick={Return}>Return</AButton>
-            </>
+            <AButton onClick={Return}>Return</AButton>
         )
     }
-
-    
-    const columnDefs = useMemo(()=>[
-        { field: 'bookDetails.bookName',headerName:'Book' },
-        { field: 'bookDetails.authorName',headerName:'Author' },
-        {field:'bookDetails.bookCategory.category',headerName:'Category'},
-        {field:'issueDate'},
-        {field:'returnDate'},
-        { headerName: 'Actions', cellRenderer: ReturnAction }
-    ],[])
+    const columnDefs = useMemo(() => [
+        { field: 'bookDetails.bookName', headerName: 'Book' },
+        { field: 'bookDetails.authorName', headerName: 'Author' },
+        { field: 'bookDetails.bookCategory.category', headerName: 'Category' },
+        { field: 'issueDate' },
+        { field: 'returnDate' },
+        { headerName: 'Actions', cellRenderer: Action }
+    ], [])
 
     return (
         <>
-            <>
-                <TableHeader>My Issued Books</TableHeader>
-                <MainDataTable  columnDefs={columnDefs} rowData={rowData} defaultColDef={{ flex: 1 }} />
-            </>
+            <TableHeader>My Issued Books</TableHeader>
+            <MainDataTable columnDefs={columnDefs} rowData={rowData} defaultColDef={{ flex: 1 }} />
         </>
     )
 }

@@ -14,7 +14,8 @@ function Header() {
 
   };
  
-   let user_details =JSON.parse(localStorage.getItem('user_details'))
+  let user_details =JSON.parse(localStorage.getItem('user_details'))
+//  let user_details={username:'Name',role:'Role'}
   console.log(user_details)
   const user={
     image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ13E7APiRYnJMkfaiVP5TFDrZSXolAQc0QhQ&usqp=CAU"

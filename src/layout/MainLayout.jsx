@@ -1,14 +1,10 @@
 import SideNavBar from "./SideNavBar";
 import Header from "./Header";
-import React, { useEffect } from "react";
+import React from "react";
 import { ComponentContainer, ComponentFooter, MainBlockLayout, RightContainer } from "./LayoutStyles";
-import { useDispatch } from "react-redux";
-import { loadUserByNameRequest } from "../reduxsaga/actions";
-const MainLayout = (props) => {
-  
- 
-  const {Component, menuItems  } = props;
 
+const MainLayout = (props) => {
+  const {Component, menuItems  } = props;
   return (
     <MainBlockLayout>
       <SideNavBar menuItems={menuItems} />

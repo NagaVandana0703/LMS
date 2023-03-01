@@ -48,50 +48,6 @@ export const CVMenuitems = [
 
 export const AVMenuItems = [
     {
-        text: "Books",
-        icon: (
-            <BiHome
-                size="1.6em"
-
-            />
-        ),
-        link: "/Books",
-        index: "1",
-    },
-    {
-        text: "ManageCustomers",
-        icon: (
-            <AiOutlineSchedule
-                size="1.6em"
-
-            />
-        ),
-        link: "/ManageCustomers",
-        index: "2",
-    },
-    {
-        text: "IssueRequests",
-        icon: (
-            <TbBoxMultiple
-                size="1.6em"
-
-            />
-        ),
-        link: "/IssueRequests",
-        index: "3",
-    },
-    {
-        text: "OverDue",
-        icon: (
-            <TbBoxMultiple
-                size="1.6em"
-
-            />
-        ),
-        link: "/OverDues",
-        index: "4",
-    },
-    {
         text: "AddBooks",
         icon: (
             <VscFeedback
@@ -100,7 +56,7 @@ export const AVMenuItems = [
             />
         ),
         link: "/AddBooks",
-        index: "5",
+        index: "1",
     },
     {
         text: "AddCategory",
@@ -111,8 +67,53 @@ export const AVMenuItems = [
             />
         ),
         link: "/AddCategory",
+        index: "2",
+    },
+    {
+        text: "ManageCustomers",
+        icon: (
+            <AiOutlineSchedule
+                size="1.6em"
+
+            />
+        ),
+        link: "/ManageCustomers",
+        index: "3",
+    },
+    {
+        text: "ManageAdmins",
+        icon: (
+            <AiOutlineSchedule
+                size="1.6em"
+
+            />
+        ),
+        link: "/ManageAdmins",
+        index: "4",
+    },
+    {
+        text: "IssueRequests",
+        icon: (
+            <TbBoxMultiple
+                size="1.6em"
+
+            />
+        ),
+        link: "/IssueRequests",
+        index: "5",
+    },
+    {
+        text: "OverDue",
+        icon: (
+            <TbBoxMultiple
+                size="1.6em"
+
+            />
+        ),
+        link: "/OverDues",
         index: "6",
     }
+    
 ]
 export const allusers = [
     { username: 'Priya', phoneNumber: '6303640577', emailId: 'priya@gmail.com', sex: 'female', hometown: 'Tirupati', dob: '06-08-2000', responseStatus: "APPROVED" },
