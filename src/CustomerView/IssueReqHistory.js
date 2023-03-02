@@ -1,15 +1,12 @@
-import React, { useEffect, useMemo } from "react";
+import React, { lazy,useEffect, useMemo } from "react";
 import { TableHeader } from "../AdminView/AVStyles";
-import MainDataTable from "../Helpers/MainDataTable";
 import { useDispatch, useSelector } from "react-redux";
 import { loadgetAllBookIssuesRequest } from "../reduxsaga/actions";
+const MainDataTable = lazy(() => import("../Helpers/MainDataTable"));
 
 const IssueReqHistory = () => {
   const userdetails = JSON.parse(localStorage.getItem('user_details'));
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadgetAllBookIssuesRequest())
-  }, []);
   const storeData = useSelector(state => state.AdminView)
   const { getallbookissues } = storeData;
   const rowData = []
@@ -17,6 +14,11 @@ const IssueReqHistory = () => {
     if (obj.user.userId === userdetails.userId)
       rowData.push(obj)
   }
+  
+  useEffect(() => {
+    dispatch(loadgetAllBookIssuesRequest())
+  }, []);
+ 
 
   const columnDefs = useMemo(()=>[
     { field: 'bookDetails.bookName', headerName: 'Book' },

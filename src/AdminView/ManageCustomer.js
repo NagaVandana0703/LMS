@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { lazy, useCallback, useEffect, useMemo, useState } from "react";
 import {  useDispatch, useSelector } from "react-redux";
-import { approveUserRegisterAction, loadAllUsersDetailsRequest } from "../reduxsaga/actions";
+import { approveUserRegisterAction, loadAllUsersDetailsRequest, loadCustomerSearchFilterRequest } from "../reduxsaga/actions";
 import { AButton, TableHeader } from "./AVStyles";
 import MainDataTable from "../Helpers/MainDataTable";
+import FilterForm from "./FilterForm";
+
 
 
 const ManageCustomers = () => {
@@ -14,7 +16,6 @@ const ManageCustomers = () => {
     }
     const dispatch = useDispatch();
     const loadAllUsersDetails = useCallback(() => {
-        console.log('dispatch')
         dispatch(loadAllUsersDetailsRequest());
     }, [dispatch]);
     useEffect(() => {
@@ -52,11 +53,13 @@ const ManageCustomers = () => {
         { headerName: 'Actions', cellRenderer: ApproveRejectAction, type: 'actionCol' }
     ], [])
     const defaultColDef = useMemo(() => ( { flex: 1 }, { filter: true } ))
-    const columnTypes = useMemo(() => { return { actionCol: { flex: 2 }, phCol: { flex: 1.2 } } })
+    const columnTypes = useMemo(() => {return{phCol:{flex:1},textCol:{flex:1},actionCol:{flex:2}}} )
+    
     return (
         <>
             <TableHeader>Manage Customers</TableHeader>
-            <MainDataTable columnDefs={columnDefs} rowData={rowData.length ? rowData : allusersdata} defaultColDef={defaultColDef} columnTypes={columnTypes} />
+            <FilterForm initialValues={{search:''}} role='customer' FieldsArr={[{type:'search',name:'search',placeholder:'Search by location,gender,age'}]}/>
+            <MainDataTable columnDefs={columnDefs} rowData={rowData} defaultColDef={defaultColDef} columnTypes={columnTypes} />
         </>
     )
 }

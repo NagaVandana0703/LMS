@@ -1,3 +1,4 @@
+
 import {REDUCER_OPERATIONS } from "./StringConstants";
 
 
@@ -5,8 +6,6 @@ import {REDUCER_OPERATIONS } from "./StringConstants";
 const initialState={
     loading: false,
     error: '',
-
-    tokendata:'',
     userRegReqResponse:'',
     userdata:'',
     allbooksdetailsdata: [],
@@ -18,12 +17,14 @@ const initialState={
     getapprovedbooks:[],
     getoverduebooks:[],
     getcategoryagebooks:[],
+    addressuccess:'',
+    returnsuccess:'',
   
 };
 export function AVReducer(state = initialState, action) {
-
+    
    switch (action.type) {
-      
+    
         case REDUCER_OPERATIONS.LOAD_USERS_LOADING: {
             return {
                 ...state,
@@ -32,14 +33,6 @@ export function AVReducer(state = initialState, action) {
             };
         }
 
-        case REDUCER_OPERATIONS.LOAD_AUTHENTICATE_TOKEN_SUCCESS: {
-            localStorage.setItem('authtoken',action.data.token)
-            return {
-                ...state,
-                tokendata: action.data,
-                loading: false
-            }
-        }
         case REDUCER_OPERATIONS.LOAD_USER_REGISTER_SUCCESS: {
             return {
                 ...state,
@@ -47,18 +40,8 @@ export function AVReducer(state = initialState, action) {
                 loading: false
             }
         }
-        case REDUCER_OPERATIONS.LOAD_USER_BY_NAME_SUCCESS: {
-            console.log(action.data[0])
-            localStorage.setItem('user_details',JSON.stringify(action.data[0]))
-            return {
-                ...state,
-                userdata: action.data[0],
-                loading: false
-            }
-        }
 
         case REDUCER_OPERATIONS.LOAD_ALL_BOOKS_DETAILS_SUCCESS: {
-            console.log(action.data)
             return {
                 ...state,
                 allbooksdetailsdata: action.data,
@@ -66,7 +49,6 @@ export function AVReducer(state = initialState, action) {
             }
         }
         case REDUCER_OPERATIONS.LOAD_ALL_USERS_DETAILS_SUCCESS: {
-            console.log(action.data)
             return {
                 ...state,
                 allusersdata: action.data,
@@ -87,7 +69,21 @@ export function AVReducer(state = initialState, action) {
                 loading: false
             }
         }
-
+        // case REDUCER_OPERATIONS.LOAD_ADD_RESPONSE_SUCCESS: {
+        //     return {
+        //         ...state,
+        //         addressuccess: action.data,
+        //         loading: false
+        //     }
+        // }
+        case REDUCER_OPERATIONS.LOAD_RETURN_BOOK_SUCCESS: {
+          
+            return {
+                ...state,
+                returnsuccess: action.data,
+                loading: false
+            }
+        }
 
         case REDUCER_OPERATIONS.LOAD_GET_ALLBOOK_ISSUES_SUCCESS: {
     
@@ -126,14 +122,14 @@ export function AVReducer(state = initialState, action) {
                 loading: false
             }
         }
-        case REDUCER_OPERATIONS.LOAD_CATEGORYAGE_SUCCESS: {
+        // case REDUCER_OPERATIONS.LOAD_CATEGORYAGE_SUCCESS: {
             
-            return {
-                ...state,
-                getcategoryagebooks: action.data,
-                loading: false
-            }
-        }
+        //     return {
+        //         ...state,
+        //         getcategoryagebooks: action.data,
+        //         loading: false
+        //     }
+        // }
         case REDUCER_OPERATIONS.LOAD_USERS_ERROR: {
             return {
                 ...state,

@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { lazy, useCallback, useEffect, useMemo, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import MainDataTable from "../Helpers/MainDataTable";
 import MainForm from "../Helpers/MainForm";
+import MainToast from "../Helpers/MainToast";
+import { ToastContainerTag } from "../Helpers/ToastStyles";
 import { loadAddBookRequest, loadAllBooksRequest, loaddeleteBookRequest } from "../reduxsaga/actions";
 import { BookFormFields, BookSubmitBtn } from "./AVConstants";
 import { AButton, Button, FormContainer, FormHeader } from "./AVStyles";
@@ -10,6 +12,8 @@ import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 const AddBooks = () => {
+  const [toastFlag, setToastFlag] = useState(false);
+  const [text, settext] = useState("");
   const dispatch = useDispatch();
   const [showbookPopup, setbookShowPopup] = useState(false);
   const handleClose = () => setbookShowPopup(false);
@@ -25,8 +29,9 @@ const AddBooks = () => {
       setbookShowPopup(true)
     }
     const del = () => {
+      settext("Successfully Deleted!")
+      setToastFlag(!toastFlag);
       dispatch(loaddeleteBookRequest(e.data.bookId));
-      dispatch(loadAllBooksRequest())
     }
     return (
       <>
@@ -55,26 +60,17 @@ const AddBooks = () => {
     if (!values.authorName) {
       errors.authorName = 'Required';
     }
-
     if (!values.bookCategory.category) {
       errors.bookCategory = { category: 'Required' };
     }
-
     if (!values.bookCategory.minAge) {
       errors.bookCategory = { ...errors.bookCategory, minAge: 'Required' };
-    } else if (isNaN(values.bookCategory.minAge)) {
-      errors.bookCategory = { ...errors.bookCategory, minAge: 'Must be a number' };
     }
     if (!values.bookCategory.maxAge) {
       errors.bookCategory = { ...errors.bookCategory, maxAge: 'Required' };
-    } else if (isNaN(values.bookCategory.maxAge)) {
-      errors.bookCategory = { ...errors.bookCategory, maxAge: 'Must be a number' };
     }
-
     if (!values.quantity) {
       errors.quantity = 'Required';
-    } else if (isNaN(values.quantity)) {
-      errors.quantity = 'Must be a number';
     }
     return errors;
   }, []);
@@ -82,10 +78,9 @@ const AddBooks = () => {
     dispatch(loadAddBookRequest(values))
     const errors = Validate(values)
     if (!Object.keys(errors).length) {
-      actions.resetForm(); // reset the form values to empty
+      actions.resetForm();
     }
     setbookShowPopup(false)
-    dispatch(loadAllBooksRequest())
   }, []);
   const BookPopup = () => {
     setinitialValues({ bookName: '', authorName: '', bookCategory: { category: '', minAge: '', maxAge: '' }, quantity: '' })
@@ -108,6 +103,10 @@ const AddBooks = () => {
           <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={BookFormFields} subObj={BookSubmitBtn} />
         </FormContainer>
       </Modal>
+      {toastFlag ? <MainToast text={text} setToastFlag={setToastFlag} /> : ""}
+      <ToastContainerTag
+        toastStyle={{ backgroundColor: "#00397A", color: "white" }}
+      />
     </>
   )
 }

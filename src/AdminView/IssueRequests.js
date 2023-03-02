@@ -1,50 +1,48 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { AButton,  TableHeader } from "./AVStyles";
+import { AButton, TableHeader } from "./AVStyles";
 import { ToastContainerTag } from "../Helpers/ToastStyles";
-import MainDataTable from "../Helpers/MainDataTable";
-import MainToast from "../Helpers/MainToast";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAddResponseRequest, loadgetAllBookIssuesRequest } from "../reduxsaga/actions";
-
+import MainDataTable from "../Helpers/MainDataTable";
+import MainToast from "../Helpers/MainToast";
 
 const IssueRequests = () => {
-    const [toastFlag,setToastFlag]=useState(false);
-    const [text,settext]=useState("");
-    const dispatch=useDispatch();
-    useEffect(()=>{
+    const [toastFlag, setToastFlag] = useState(false);
+    const [text, settext] = useState("");
+    const dispatch = useDispatch();
+    const storeData = useSelector(state => state.AdminView)
+    const rowData = storeData.getallbookissues;
+    
+    useEffect(() => {
         dispatch(loadgetAllBookIssuesRequest())
-    },[])
-    const storeData=useSelector(state=>state.AdminView)
-    const rowData=storeData.getallbookissues;
-    console.log(rowData)
+    }, [loadgetAllBookIssuesRequest])
+ 
     const Action = (e) => {
-        const Aprove= () => {
-            console.log(e.data)
+        const Aprove = () => {
             settext("Successfully Approved")
             setToastFlag(!toastFlag);
-           dispatch(loadAddResponseRequest(e.data.issueId,1))
-           dispatch(loadgetAllBookIssuesRequest())
+            dispatch(loadAddResponseRequest(e.data.issueId, 1))
         }
         return (
-                <AButton onClick={Aprove}>Approved</AButton>
+            <AButton onClick={Aprove}>Approved</AButton>
         )
     }
-    const columnDefs = useMemo(()=>[
-        { field: 'bookDetails.bookName', headerName:'Book Name' },
-        { field: 'bookDetails.authorName',headerName:'Author' },
-        { field: 'user.username', headerName:'Customer Name' },
+    const columnDefs = useMemo(() => [
+        { field: 'bookDetails.bookName', headerName: 'Book Name' },
+        { field: 'bookDetails.authorName', headerName: 'Author' },
+        { field: 'user.username', headerName: 'Customer Name' },
         { headerName: 'Actions', cellRenderer: Action }
-    ],[])
-      
+    ], [])
+
     return (
         <>
             <TableHeader>Customer Requested to Admin to issue these Books</TableHeader>
-            <MainDataTable columnDefs={columnDefs} rowData={rowData} defaultColDef={{flex:1}} />
-            {toastFlag?<MainToast text={text} setToastFlag={setToastFlag}/>:""}
+            <MainDataTable columnDefs={columnDefs} rowData={rowData} defaultColDef={{ flex: 1 }} />
+            {toastFlag ? <MainToast text={text} setToastFlag={setToastFlag} /> : ""}
             <ToastContainerTag
                 toastStyle={{ backgroundColor: "#00397A", color: "white" }}
-               /> 
+            />
         </>
     )
 }

@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { BiBookOpen } from "react-icons/bi";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loadUserByNameRequest } from "../reduxsaga/actions";
 import {  DropdownItemLogout, DropdownToggleBasic, Header1, HeaderBlock, HeaderTitleNew,  RightIcons, Text, UserDesignation, UserDesignationInnova, UserDetails, UserImageInnova, UserNameInnova } from "./LayoutStyles";
 
 function Header() {

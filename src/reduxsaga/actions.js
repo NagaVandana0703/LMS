@@ -2,16 +2,6 @@
 import { allbooks, allusers, issuereq, issues } from "./jsondata"
 import { REDUCER_OPERATIONS } from "./StringConstants"
 
-//token generate on giving username,pwd for /authenticate post api
-export const loadTokenRequest=(obj)=>{  
-    return{
-        type:REDUCER_OPERATIONS.LOAD_AUTHENTICATE_TOKEN_REQUEST,
-        payload:obj,
-        link:'authenticate',
-        success:REDUCER_OPERATIONS.LOAD_AUTHENTICATE_TOKEN_SUCCESS
-
-    }
-}
  //on customer registration request--/userRequest post api
  export const loadUserRegisterRequest=(obj)=>{  
     return{
@@ -35,22 +25,11 @@ export const loadAdminRegisterRequest=(obj)=>{
 export const approveUserRegisterAction=(id,status)=>{
     return{
         type:REDUCER_OPERATIONS.LOAD_APPROVE_USER_REQUEST,
-        // payload1:id,
-        // payload2:status,
         link:`userRequestStatus?userid=${id}&responseStatus=${status}`,
         success: REDUCER_OPERATIONS.LOAD_APPROVE_USER_SUCCESS
     }
 }
 
-export const loadUserByNameRequest=(uname)=>{
-  
-    return{
-        type:REDUCER_OPERATIONS.LOAD_USER_BY_NAME_REQUEST,
-        link:`user/${uname}`,
-        success: REDUCER_OPERATIONS.LOAD_USER_BY_NAME_SUCCESS
-
-    }
-}
 
 export const loadAllBooksRequest=()=>{
    
@@ -77,7 +56,6 @@ export const loadAddBookRequest=(obj)=>{
         payload:obj,
         link:'saveBook',
         success:REDUCER_OPERATIONS.LOAD_ADD_BOOK_SUCCESS
-
     }
 }
 export const loadAddCategoryRequest=(obj)=>{
@@ -96,8 +74,6 @@ export const loadissueBookRequest=(bookid,userid)=>{
   
     return{
         type:REDUCER_OPERATIONS.LOAD_ISSUE_BOOK_REQUEST,
-        // payload1:bookid,
-        // payload2:userid,
         link:`issueBook/?bookid=${bookid}&userid=${userid}`,
         success:REDUCER_OPERATIONS.LOAD_ISSUE_BOOK_SUCCESS
 
@@ -110,7 +86,6 @@ export const loadgetAllBookIssuesRequest=()=>{
         link:'getAllIssues',
         success:REDUCER_OPERATIONS.LOAD_GET_ALLBOOK_ISSUES_SUCCESS,
         dummydata:issues
-
     }
 }
 export const loadAddResponseRequest=(issueid,resStatus)=>{
@@ -119,9 +94,6 @@ export const loadAddResponseRequest=(issueid,resStatus)=>{
         type:REDUCER_OPERATIONS.LOAD_ADD_RESPONSE_REQUEST,
         link:`addResponse?issueId=${issueid}&responseStatus=${resStatus}`,
         success:REDUCER_OPERATIONS.LOAD_ADD_RESPONSE_SUCCESS,
-        // payload1:issueid ,
-        // payload2:resStatus
-
     }
 }
 export const loadgetApprovedBooksRequest=()=>{
@@ -138,25 +110,20 @@ export const loadreturnBookRequest=(issueid)=>{
   
     return{
         type:REDUCER_OPERATIONS.LOAD_RETURN_BOOK_REQUEST,
-        // payload1:issueid,
         link:`returnBook?issueId=${issueid}`,
         success:REDUCER_OPERATIONS.LOAD_RETURN_BOOK_SUCCESS
 
     }
 }
-export const loadgetOverDueRequest=()=>{
-  
+export const loadgetOverDueRequest=()=>{  
     return{
         type:REDUCER_OPERATIONS.LOAD_GET_OVERDUE_REQUEST,
         link:'allOverdue',
         success:REDUCER_OPERATIONS.LOAD_GET_OVERDUE_SUCCESS,
-      
-
     }
 }
 
-export const loadgetCategoryRequest=()=>{
-  
+export const loadgetCategoryRequest=()=>{  
     return{
         type:REDUCER_OPERATIONS.LOAD_CATEGORY_REQUEST,
         link:'category',
@@ -164,8 +131,7 @@ export const loadgetCategoryRequest=()=>{
     
     }
 }
-export const loaddeleteCategoryRequest=(id)=>{
-  
+export const loaddeleteCategoryRequest=(id)=>{ 
     return{
         type:REDUCER_OPERATIONS.LOAD_DELETE_CATEGORY_REQUEST,
         link:`deleteCategory/${id}`,
@@ -174,7 +140,6 @@ export const loaddeleteCategoryRequest=(id)=>{
     }
 }
 export const loaddeleteBookRequest=(id)=>{
-  
     return{
         type:REDUCER_OPERATIONS.LOAD_DELETE_BOOK_REQUEST,
         link:`deleteBook/${id}`,
@@ -182,12 +147,29 @@ export const loaddeleteBookRequest=(id)=>{
     
     }
 }
-export const loadCategoryAgeRequest=(category,minAge)=>{
-  
+export const loadCategoryAgeRequest=(category,minAge)=>{ 
     return{
         type:REDUCER_OPERATIONS.LOAD_CATEGORYAGE_REQUEST,
         link:`searchBooksByCategory&Age/?category=${category}&minAge=${minAge}`,
-        success:REDUCER_OPERATIONS.LOAD_CATEGORYAGE_SUCCESS,
+        success:REDUCER_OPERATIONS.LOAD_ALL_BOOKS_DETAILS_SUCCESS,
+    
+    }
+}
+export const loadCustomerSearchFilterRequest=(val)=>{
+  
+    return{
+        type:REDUCER_OPERATIONS.LOAD_CUSTOMER_SEARCHFILTER_REQUEST,
+        link:`getCustomerCommonSearch?search=${val}`,
+        success:REDUCER_OPERATIONS.LOAD_ALL_USERS_DETAILS_SUCCESS,
+    
+    }
+}
+export const loadAdminSearchFilterRequest=(val)=>{
+  
+    return{
+        type:REDUCER_OPERATIONS.LOAD_ADMIN_SEARCHFILTER_REQUEST,
+        link:`getAdminCommonSearch?search=${val}`,
+        success:REDUCER_OPERATIONS.LOAD_ALL_USERS_DETAILS_SUCCESS,
     
     }
 }

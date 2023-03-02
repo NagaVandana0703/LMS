@@ -14,4 +14,4 @@ export const BookFormFields=[
     { name: 'quantity', type: 'number', placeholder: 'Quantity' }
 
 ]
-export const BookSubmitBtn = { text: 'Add Book' }
+export const BookSubmitBtn = { text: 'Add Book' };

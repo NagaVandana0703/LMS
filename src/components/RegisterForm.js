@@ -1,11 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { lazy, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loadAdminRegisterRequest, loadUserRegisterRequest } from '../reduxsaga/actions';
-import MainForm from '../Helpers/MainForm';
+const MainForm = lazy(() => import('../Helpers/MainForm'));
 
 const RegisterForm = ({ setFlag, role }) => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     const initialValues = { username: '', password: '', phoneNumber: '', emailId: '', sex: '', hometown: '', dob: '' };
     const Validate = useCallback((values) => {
@@ -16,15 +15,14 @@ const RegisterForm = ({ setFlag, role }) => {
         }
         return errors;
     }, [])
-    const HandleSubmit = (values) => {
-        console.log(values);
+    const HandleSubmit = useCallback((values) => {
         if (role === 'user')
             dispatch(loadUserRegisterRequest(values))
         else
             dispatch(loadAdminRegisterRequest(values))
         setFlag(false)
-    }
-    const ArrFields = [
+    }, [])
+    const ArrFields = useMemo(()=>[
         { className: 'LRforminput', type: 'text', name: 'username', placeholder: 'UserName' },
         { className: 'LRforminput', type: 'password', name: 'password', placeholder: 'Password' },
         { className: 'LRforminput', type: 'number', name: 'phoneNumber', placeholder: 'PhoneNumber' },
@@ -32,7 +30,7 @@ const RegisterForm = ({ setFlag, role }) => {
         { className: 'LRforminput', type: 'text', name: 'sex', placeholder: 'Gender' },
         { className: 'LRforminput', type: 'text', name: 'hometown', placeholder: 'Address' },
         { className: 'LRforminput', type: 'date', name: 'dob', placeholder: 'Date Of birth' },
-    ]
+    ],[])
     const subObj = { className: 'LRformsubmitR', text: 'Register' }
     return (
         <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={ArrFields} subObj={subObj} />

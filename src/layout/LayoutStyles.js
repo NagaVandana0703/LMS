@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 export const MainBlockLayout=styled.div`
 position: fixed;
-    display: flex;
-    height: 100%;
+display: flex;
+height: 100%;
 `
 export const RightContainer=styled.div`
 display: flex;
@@ -16,15 +16,14 @@ export const ComponentContainer=styled.div`
 margin-top: 5rem;
 `
 export const ComponentFooter=styled.div`
-position: fixed;
-    bottom:0%;
-    right:0%;
-    font-family: 'Inter';
+  position: fixed;
+  bottom:0%;
+  right:0%;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 16px;
-  
+  line-height: 16px;  
   color: #515D6B;
 `
 
@@ -45,12 +44,11 @@ export const NavUpper=styled.div`
 display: grid;
 `
 export const NavMenu=styled.div`
-grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     margin-top: 2.875rem;
     display: grid;
 `
 export const MenuItem=styled(NavLink)`
-
 height: 3rem;
 display: flex;
 color: white;
@@ -72,14 +70,14 @@ align-items: center;
 
 `
 export const Txt=styled.p`
-padding-top: 0.875rem;
+    padding-top: 0.875rem;
     margin-left: 0.625rem;
 `
 
 //Header Styling
 
 export const HeaderBlock=styled.div`
-position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -89,7 +87,6 @@ position: fixed;
   border-color: hsl(0, 0%, 82%);
   height: 75px;
   padding: 1px;
-
   font-family: "sans-serif";
 `
 export const Header1=styled.div`
@@ -100,7 +97,7 @@ padding: 8px 10px;
 align-items: center;
 `
 export const HeaderTitleNew=styled.a`
-display: flex;
+  display: flex;
   align-items: center;
   flex-direction: row;
   padding-left: 200px;
@@ -108,21 +105,21 @@ display: flex;
   text-decoration: none;
 `
 export const Text=styled.div`
-font-style: normal;
+  font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 22px;
   color: #393A3A;
 `
 export const RightIcons=styled.div`
-display: flex;
+  display: flex;
   align-items: center;
   flex-direction: row;
   gap: 30px;
   margin-top: -8px;
 `
 export const UserDesignation=styled.div`
-border-radius: 6px;
+  border-radius: 6px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -131,21 +128,17 @@ border-radius: 6px;
   justify-content: space-around;
 `
 export const UserDetails=styled.div`
-display: flex;
+  display: flex;
   flex-direction: column;
 `
 export const UserNameInnova=styled.div`
-font-family: 'Inter';
+  font-family: 'Inter';
   font-style: normal;
   width: 90px;
-
   font-weight: 600;
   font-size: 16px;
   line-height: 113%;
   text-align: center;
-
-  /* body text color */
-
   color: #393A3A;
 `
 export const UserDesignationInnova=styled.div`
@@ -153,18 +146,12 @@ width: 101px;
 height: 12px;
 left: 1202px;
 top: 32px;
-
 font-family: 'Inter';
 font-style: normal;
 font-weight: 400;
 font-size: 13px;
 line-height: 113%;
-/* or 12px */
-
 text-align: center;
-
-/* light text */
-
 color: #A0A0A0;
 `
 export const DropdownToggleBasic=styled(Dropdown.Toggle)`
@@ -172,7 +159,7 @@ background-color: #F7F7F7 !important;
 border: none !important;
 `
 export const UserImageInnova=styled.img`
-border: 1px solid #00397A;
+  border: 1px solid #00397A;
   filter: drop-shadow(0px 4px 4px rgba(255, 255, 255, 0.15));
   border-radius: 50%;
   width: 40px;

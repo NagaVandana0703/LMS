@@ -1,13 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { lazy,useCallback, useEffect, useMemo, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import MainDataTable from "../Helpers/MainDataTable";
-import MainForm from "../Helpers/MainForm";
+import { ToastContainerTag } from "../Helpers/ToastStyles";
 import { loadAddCategoryRequest, loaddeleteCategoryRequest, loadgetCategoryRequest } from "../reduxsaga/actions";
 import { CategoryBtn, CategoryFormFields } from "./AVConstants";
 import { AButton, Button, FormContainer, FormHeader } from "./AVStyles";
 import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
+import MainDataTable from "../Helpers/MainDataTable";
+import MainForm from "../Helpers/MainForm";
+import MainToast from "../Helpers/MainToast";
+
 const AddCategory = () => {
+    const [toastFlag,setToastFlag]=useState(false);
+    const [text,settext]=useState("");
     const [showcategoryPopup, setcategoryShowPopup] = useState(false);
     const handleClose = () => setcategoryShowPopup(false);
     const [initialValues, setinitialValues] = useState({ category: '', minAge: '', maxAge: '' });
@@ -24,8 +29,9 @@ const AddCategory = () => {
             setcategoryShowPopup(true)
         }
         const del = () => {
+            settext("Successfully Deleted!")
+            setToastFlag(!toastFlag);
             dispatch(loaddeleteCategoryRequest(e.data.categoryId));
-            dispatch(loadgetCategoryRequest())
         }
         return (
             <>
@@ -50,13 +56,13 @@ const AddCategory = () => {
         return errors;
     }, []);
     const HandleSubmit = useCallback((values, actions) => {
+        console.log(values)
         dispatch(loadAddCategoryRequest(values))
         const errors = Validate(values)
         if (!Object.keys(errors).length) {
-            actions.resetForm(); // reset the form values to empty
+            actions.resetForm(); 
         }
         setcategoryShowPopup(false)
-        dispatch(loadgetCategoryRequest())
     }, []);
     const popup = () => {
         setinitialValues({ category: '', minAge: '', maxAge: '' })
@@ -79,6 +85,10 @@ const AddCategory = () => {
                     <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={CategoryFormFields} subObj={CategoryBtn} />
                 </FormContainer>
             </Modal>
+            {toastFlag?<MainToast text={text} setToastFlag={setToastFlag}/>:""}
+            <ToastContainerTag
+                toastStyle={{ backgroundColor: "#00397A", color: "white" }}
+               /> 
         </>
     )
 }

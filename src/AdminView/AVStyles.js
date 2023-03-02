@@ -118,3 +118,9 @@ export const StyledAgGridReact = styled(AgGridReact)`
     color:red
 }
 `
+export const InputSearch=styled.input`
+margin-left:800px;
+margin-top:80px;
+padding:5px;
+width:300px
+`

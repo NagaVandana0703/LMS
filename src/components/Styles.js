@@ -2,12 +2,11 @@ import styled from "styled-components";
 
 export const FlexContainer = styled.div`
 display: flex;
- 
 background-color: darkblue;
 width:60%;
 margin: 120px auto;
 padding: 20px;
-height: 430px;
+height: 500px;
 `
 export const FlexContainerDiv = styled.div`
 background-color: whitesmoke;
@@ -19,8 +18,7 @@ border-radius: 5px;
 padding: 20px;
 `
 export const FieldBox1 = styled.div`
-padding: 5px;
-    
+padding: 5px;    
 `
 export const Btn = styled.button`
 background-color: darkblue;

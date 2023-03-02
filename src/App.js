@@ -1,10 +1,8 @@
 import './App.css';
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './reduxsaga/store';
-import ManageAdmins from './AdminView/ManageAdmins';
-
 
 
 const CVLayout = lazy(() => import('./CustomerView/CVLayout'));
@@ -18,15 +16,13 @@ const OverDues = lazy(() => import('./AdminView/OverDues'));
 const IssueRequests = lazy(() => import('./AdminView/IssueRequests'));
 const AddBooks = lazy(() => import('./AdminView/AddBooks'));
 const ManageCustomers = lazy(() => import('./AdminView/ManageCustomer'));
+const ManageAdmins = lazy(() => import('./AdminView/ManageAdmins'));
 const AddCategory = lazy(() => import('./AdminView/AddCategory'));
 function App() {
   return (
-    <div className="App">
-      <Provider store={store}>
-        <Router>
+      <Provider store={store}>    
           <Suspense fallback={<h2>LOADING...........</h2>}>
             <Routes>
-
               <Route exact path="/" element={<LoginPage />} />
               <Route path='/AllBooks' element={<CVLayout element={AllBooks} />} />
               <Route path='/IssueReqHistory' element={<CVLayout element={IssueReqHistory} />} />
@@ -40,12 +36,9 @@ function App() {
               <Route path='/AddCategory' element={<AVlayout element={AddCategory} />} />
             </Routes>
           </Suspense>
-        </Router>
       </Provider>
-
-    </div>
   );
 }
 
-export default React.memo(App);
+export default App;
 
