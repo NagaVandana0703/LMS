@@ -3,16 +3,12 @@ import { MenuItem, NavMenu, NavUpper, SideNavContainer, Txt } from "./LayoutStyl
 
 function SideNavBar(props) {
   const { menuItems } = props;
-
   return (
     <SideNavContainer>
       <NavUpper>
-        <div className="nav-heading">
-          &nbsp;
-        </div>
         <NavMenu>
           {menuItems.map(({ text, icon, link }) => (
-            <MenuItem to={link} activeClassName="active">
+            <MenuItem to={link} activeclassname="active">
               {icon}
               {<Txt>{text}</Txt>}
             </MenuItem>
