@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect, useMemo, useState } from "react";
+import React, {  useCallback, useEffect, useMemo, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import MainDataTable from "../Helpers/MainDataTable";
@@ -26,6 +26,7 @@ const AddBooks = () => {
   const Action = (e) => {
     const edit = () => {
       setinitialValues(e.data)
+      console.log(initialValues)
       setbookShowPopup(true)
     }
     const del = () => {
@@ -82,10 +83,10 @@ const AddBooks = () => {
     }
     setbookShowPopup(false)
   }, []);
-  const BookPopup = () => {
+  const BookPopup = useCallback(() => {
     setinitialValues({ bookName: '', authorName: '', bookCategory: { category: '', minAge: '', maxAge: '' }, quantity: '' })
     setbookShowPopup(true)
-  }
+  },[]);
   return (
     <>
       <Button className="addBtn" onClick={BookPopup}>Add Book</Button>

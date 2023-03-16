@@ -1,4 +1,4 @@
-import React, { lazy,useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainerTag } from "../Helpers/ToastStyles";
@@ -26,10 +26,11 @@ const AddCategory = () => {
     const Action = (e) => {
         const edit = () => {
             setinitialValues(e.data)
+            console.log(initialValues)
             setcategoryShowPopup(true)
         }
         const del = () => {
-            settext("Successfully Deleted!")
+            settext("Successfully Deleted!");
             setToastFlag(!toastFlag);
             dispatch(loaddeleteCategoryRequest(e.data.categoryId));
         }
@@ -64,10 +65,10 @@ const AddCategory = () => {
         }
         setcategoryShowPopup(false)
     }, []);
-    const popup = () => {
+    const popup = useCallback(() => {
         setinitialValues({ category: '', minAge: '', maxAge: '' })
         setcategoryShowPopup(true)
-    }
+    },[])
     return (
         <>
             <Button className="addBtn" onClick={popup}>Add Category</Button>

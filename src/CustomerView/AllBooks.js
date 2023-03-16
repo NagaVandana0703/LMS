@@ -16,6 +16,12 @@ const AllBooks = () => {
     const { allbooksdetailsdata } = storeData;
     const userdetails = JSON.parse(localStorage.getItem('user_details'))
     const dispatch = useDispatch();
+    const [initialValues,setinitialValues]=useState({ category: '', age: '' })
+    console.log(initialValues)
+    console.log(allbooksdetailsdata.length,initialValues.category.length)
+    if(allbooksdetailsdata.length===0&&initialValues.category.length!==0){
+        alert('No matches')
+    }
 
     const loadAllBooksDetails = useCallback(() => {
         dispatch(loadAllBooksRequest());
@@ -36,7 +42,7 @@ const AllBooks = () => {
     const columnDefs = useMemo(() => [
         { field: 'bookName' },
         { field: 'authorName' },
-        { field: 'bookCategory.category' },
+        { field: 'bookCategory.category',headerName:'Book Category' },
         { field: 'quantity' },
         { headerName: 'Actions', cellRenderer: IssueBodyAction }
     ], [])
@@ -44,7 +50,7 @@ const AllBooks = () => {
     return (
         <>
             <TableHeader>ALL AVAILABLE BOOKS IN LIBRARY</TableHeader>
-            <FilterForm initialValues={{ category: '', age: '' }} role='allbooks' FieldsArr={useMemo(() => [{ type: 'text', name: 'category', placeholder: 'Enter Category' }, { type: 'number', name: 'age', placeholder: 'Enter Age' }])} />
+            <FilterForm initialValues={initialValues} role='allbooks' FieldsArr={useMemo(() => [{ type: 'text', name: 'category', placeholder: 'Enter Category' }, { type: 'number', name: 'age', placeholder: 'Enter Age' }])} />
             <MainDataTable columnDefs={columnDefs} rowData={allbooksdetailsdata} defaultColDef={{ flex: 1 }} />
             {toastFlag ? <MainToast text={text} setToastFlag={setToastFlag} /> : ""}
             <ToastContainerTag

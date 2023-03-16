@@ -16,16 +16,16 @@ const LoginPage = () => {
             <FlexContainer>
                 <FlexContainerDiv>
                     <h4>Admin Login</h4>
-                    {flag1 ? <RegisterForm setFlag={setFlag1} role='admin' /> : <>
-                        <Loginform />
-                    </>}
+                    {flag1 ?<> <RegisterForm setFlag={setFlag1} role='admin' /><AlterOption onClick={() => setFlag1(false)} >Login</AlterOption></> : <>
+                        <Loginform role='ADMIN'/>
+                    </>}<br/>
                     {flag1 ? '' : <p>New Admin?<AlterOption onClick={() => setFlag1(true)} >Register</AlterOption></p>}
                 </FlexContainerDiv>
                 <FlexContainerDiv>
                     <h4>Customer Login</h4>
-                    {flag2 ? <RegisterForm setFlag={setFlag2} role='user' /> : <>
-                        <Loginform />
-                    </>}
+                    {flag2 ?<> <RegisterForm setFlag={setFlag2} role='user' /> <AlterOption onClick={() => setFlag2(false)} >Login</AlterOption></>: <>
+                        <Loginform role='USER'/>
+                    </>}<br/>
                     {flag2 ? '' : <p>New User?<AlterOption onClick={() => setFlag2(true)} >Register</AlterOption></p>}
                 </FlexContainerDiv>
             </FlexContainer>
@@ -33,4 +33,4 @@ const LoginPage = () => {
     )
 }
 
-export default React.memo(LoginPage);
+export default LoginPage;

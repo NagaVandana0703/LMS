@@ -1,8 +1,7 @@
 import React, { lazy, useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loadAdminRegisterRequest, loadUserRegisterRequest } from '../reduxsaga/actions';
-const MainForm = lazy(() => import('../Helpers/MainForm'));
+import MainForm from '../Helpers/MainForm';
 
 const RegisterForm = ({ setFlag, role }) => {
     const dispatch = useDispatch()
@@ -20,6 +19,7 @@ const RegisterForm = ({ setFlag, role }) => {
             dispatch(loadUserRegisterRequest(values))
         else
             dispatch(loadAdminRegisterRequest(values))
+        alert('Successfully registered!Need to wait for admin approval')
         setFlag(false)
     }, [])
     const ArrFields = useMemo(()=>[

@@ -3,7 +3,7 @@ import MainForm from "../Helpers/MainForm";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Loginform = () => {
+const Loginform = ({role}) => {
     const navigate = useNavigate();
     const initialValues = { username: '', password: '' };
     const Validate =useCallback((values) => {
@@ -14,7 +14,7 @@ const Loginform = () => {
         }
         return errors;
     },[])
-    const HandleSubmit = async (values, actions) => {
+    const HandleSubmit = useCallback((values, actions) => {
         localStorage.setItem('name', values.username)
         axios.get(`http://localhost:8081/user/${values.username}`)
             .then((response) => {
@@ -23,10 +23,10 @@ const Loginform = () => {
                 axios.post('http://localhost:8081/authenticate', values)
                     .then((response) => {
                         localStorage.setItem('authtoken', response.data.token)
-                        { user.role === 'ADMIN' ? navigate('/AddBooks') : navigate('/AllBooks') }
+                        {  role===user.role ? role==='ADMIN'?navigate('/AddBooks'):navigate('/AllBooks')  : alert('Incorrect role Login attempted!') }
                     })
                     .catch(() => {
-                        alert('Admin Approval is in pending!')
+                        alert('Invalid Credentials! or Admin approval is in pending!')
                         actions.resetForm()
                     })
             })
@@ -34,7 +34,7 @@ const Loginform = () => {
                 alert('No Account Found')
                 actions.resetForm()
             })
-    }
+    },[])
     const ArrFields = [
         { className: 'LRforminput', type: 'text', name: 'username', placeholder: 'UserName' },
         { className: 'LRforminput', type: 'password', name: 'password', placeholder: 'Password' },
@@ -45,4 +45,4 @@ const Loginform = () => {
     )
 }
 
-export default Loginform;
+export default React.memo(Loginform);
