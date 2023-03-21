@@ -1,7 +1,7 @@
 import { put, call, takeEvery, all } from 'redux-saga/effects';
 import { REDUCER_OPERATIONS } from './StringConstants';
 import axios from '../components/Axios';
-import { loadAllBooksRequest, loadgetAllBookIssuesRequest, loadgetApprovedBooksRequest, loadgetCategoryRequest, loadgetOverDueRequest } from './actions';
+import { loadAllBooksRequest, loadAllUsersDetailsRequest, loadgetAllBookIssuesRequest, loadgetApprovedBooksRequest, loadgetCategoryRequest, loadgetOverDueRequest } from './actions';
 
 
 
@@ -46,6 +46,8 @@ function* PostParamsApiFunc(action) {
       yield put(loadgetAllBookIssuesRequest())
     if(action.type==='LOAD_RETURN_BOOK_REQUEST')
       yield put(loadgetApprovedBooksRequest())
+    if(action.type==='LOAD_APPROVE_USER_REQUEST')
+      yield put(loadAllUsersDetailsRequest())
     var success = action.success;
     yield put({ type: success, data: users.data });
   } catch (e) {

@@ -101,7 +101,7 @@ const AddBooks = () => {
           <FormHeader>
             <h4>Add New Book</h4>
           </FormHeader>
-          <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={BookFormFields} subObj={BookSubmitBtn} />
+          <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={BookFormFields} subObj={Object.values(initialValues).length===4? { text: 'Add Book' }:{ text: 'Update Book' }} />
         </FormContainer>
       </Modal>
       {toastFlag ? <MainToast text={text} setToastFlag={setToastFlag} /> : ""}

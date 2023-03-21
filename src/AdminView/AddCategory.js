@@ -56,8 +56,8 @@ const AddCategory = () => {
         }
         return errors;
     }, []);
+   
     const HandleSubmit = useCallback((values, actions) => {
-        console.log(values)
         dispatch(loadAddCategoryRequest(values))
         const errors = Validate(values)
         if (!Object.keys(errors).length) {
@@ -83,7 +83,7 @@ const AddCategory = () => {
                     <FormHeader>
                         <h4>Add New Category</h4>
                     </FormHeader>
-                    <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={CategoryFormFields} subObj={CategoryBtn} />
+                    <MainForm initialValues={initialValues} Validate={Validate} HandleSubmit={HandleSubmit} ArrFields={CategoryFormFields} subObj={Object.values(initialValues).length===3? {text: 'Add Category'}:{text: 'Update Category'} } />
                 </FormContainer>
             </Modal>
             {toastFlag?<MainToast text={text} setToastFlag={setToastFlag}/>:""}

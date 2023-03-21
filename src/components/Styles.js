@@ -1,10 +1,14 @@
 import styled from "styled-components";
+export const LoginHeader=styled.h2`
+color:white;
+
+`
 
 export const FlexContainer = styled.div`
 display: flex;
 background-color: darkblue;
 width:60%;
-margin: 120px auto;
+margin: 80px auto;
 padding: 20px;
 height: 500px;
 `

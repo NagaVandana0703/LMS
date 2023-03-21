@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RegisterForm from "./RegisterForm";
-import { FlexContainer, FlexContainerDiv } from "./Styles";
+import { FlexContainer, FlexContainerDiv, LoginHeader } from "./Styles";
 import { AlterOption } from "../AdminView/AVStyles";
 import Loginform from "./LoginForm";
 
@@ -14,8 +14,10 @@ const LoginPage = () => {
     return (
         <div>
             <FlexContainer>
+            <LoginHeader> Library Management System</LoginHeader>
+
                 <FlexContainerDiv>
-                    <h4>Admin Login</h4>
+                                    <h4>Admin Login</h4>
                     {flag1 ?<> <RegisterForm setFlag={setFlag1} role='admin' /><AlterOption onClick={() => setFlag1(false)} >Login</AlterOption></> : <>
                         <Loginform role='ADMIN'/>
                     </>}<br/>

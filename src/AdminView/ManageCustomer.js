@@ -22,19 +22,18 @@ const ManageCustomers = () => {
         loadAllUsersDetails();
     }, [loadAllUsersDetails])
     const ApproveRejectAction = (props) => {
-        const [rowdata, setrowdata] = useState(props.data);
+        const {data}=props;
+        const {responseStatus}=data;
         const Aprove = () => {
-            setrowdata({ ...rowdata, responseStatus: 'APPROVED' })
-            dispatch(approveUserRegisterAction(props.data.userId, 1))
+            dispatch(approveUserRegisterAction(props.data.userId, 1));            
         }
         const Reject = () => {
-            setrowdata({ ...rowdata, responseStatus: 'PENDING' })
-            dispatch(approveUserRegisterAction(props.data.userId, 2))
-
+            dispatch(approveUserRegisterAction(props.data.userId, 2));
+          
         }
         return (
             <>
-                {rowdata.responseStatus === 'PENDING' ? <AButton onClick={Aprove}>
+                {responseStatus === 'PENDING' || responseStatus === 'REJECTED'? <AButton onClick={Aprove}>
                     Approve
                 </AButton> : ''}
                 <AButton className="Rbutton" onClick={Reject}>
@@ -50,7 +49,7 @@ const ManageCustomers = () => {
         { field: 'sex', headerName: 'Gender', type: 'textCol' },
         { field: 'hometown', headerName: 'Location', type: 'textCol' },
         { field: 'dob', headerName: 'DOB', type: 'textCol' },
-        { headerName: 'Actions', cellRenderer: ApproveRejectAction, type: 'actionCol' }
+        { headerName: 'Actions',field:'responseStatus', cellRenderer: ApproveRejectAction, type: 'actionCol' }
     ], [])
     const defaultColDef = useMemo(() => ( { flex: 1 }, { filter: true } ))
     const columnTypes = useMemo(() => {return{phCol:{flex:1},textCol:{flex:1},actionCol:{flex:2}}} )
